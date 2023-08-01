@@ -134,39 +134,7 @@ class NonAkademikPage extends StatelessWidget {
                   ),
                 ),
               ),
-              ResponsiveGridCol(
-                xs: 3,
-                md: 2,
-                child: InkWell(
-                  onTap: () => Get.to(WisudaPage()),
-                  child: Column(
-                    children: [
-                      Container(
-                          padding: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                              color: DataColors.blusky,
-                              borderRadius: BorderRadius.circular(30)),
-                          child: SvgPicture.asset(
-                            'assets/images/dashboard/icon/akademik.svg',
-                          )),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        'Wisuda',
-                        style: TextStyle(
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w700,
-                            color: DataColors.primary700),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              
             ],
           ),
         ]),

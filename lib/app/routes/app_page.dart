@@ -8,6 +8,7 @@ import 'package:gostradav1/app/ui/pages/kategori/khs/khs.dart';
 import 'package:gostradav1/app/ui/pages/kategori/krs/detailKrs.dart';
 import 'package:gostradav1/app/ui/pages/kategori/krs/krs.dart';
 import 'package:gostradav1/app/ui/pages/kategori/lainnya/lainnya.dart';
+import 'package:gostradav1/app/ui/pages/kategori/nonakademik/lihatundagan.dart';
 import 'package:gostradav1/app/ui/pages/kategori/nonakademik/softskill/editsoftskill.dart';
 import 'package:gostradav1/app/ui/pages/kategori/penawaran_krs/penawaran_krs.dart';
 import 'package:gostradav1/app/ui/pages/kategori/riwayat_bayar/detailtransaksi/detail_transaksi.dart';
@@ -28,6 +29,7 @@ import '../ui/pages/kategori/keuangan/kategori.dart';
 import '../ui/pages/kategori/nonakademik/nonakademik.dart';
 import '../ui/pages/kategori/nonakademik/softskill/inputsoftskill.dart';
 import '../ui/pages/kategori/nonakademik/softskill/softskill.dart';
+import '../ui/pages/kategori/nonakademik/wisuda.dart';
 
 class AppPage {
   static final pages = [
@@ -144,6 +146,14 @@ class AppPage {
     GetPage(
       name: RoutName.editsoftskill,
       page: () => EditSoftSkillPage(),
+    ),
+    GetPage(
+      name: RoutName.wisuda,
+      page: () => WisudaPage(),
+    ),
+    GetPage(
+      name: RoutName.lihatundagan,
+      page: () => LihatUndanganPage(),
     )
   ];
 }

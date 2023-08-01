@@ -36,4 +36,6 @@ abstract class RoutName {
   static const softskill = '/softskill';
   static const inputsoftskill = '/inputsoftskill';
   static const editsoftskill = '/editsoftskill';
+  static const wisuda = '/wisuda';
+  static const lihatundagan = '/lihatundangan';
 }

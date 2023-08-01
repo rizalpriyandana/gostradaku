@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -92,7 +92,9 @@ class DashboardPage extends GetView<DashboardController> {
                     Padding(
                       padding: EdgeInsets.only(top: 15.sp),
                       child: InkWell(
-                        onTap: () => Get.toNamed(RoutName.notifikasi), // needed
+                        onTap: () {
+                          Get.snackbar("Hi", "Coming Soon");
+                        }, // needed
                         child: SvgPicture.asset(
                           'assets/images/dashboard/icon/notif.svg',
                           // fit: BoxFit.cover,
@@ -166,441 +168,61 @@ class DashboardPage extends GetView<DashboardController> {
                             color: DataColors.primary700,
                           ),
                         ),
-                        InkWell(
-                          onTap: () => showMaterialModalBottomSheet(
-                              context: context,
-                              // barrierColor: DataColors.primary,
-                              expand: false,
-                              bounce: true,
-                              builder: (context) => Lainnyav2Page(),
-                              enableDrag: true,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10.sp),
-                                      topRight: Radius.circular(10.sp)))),
-                          child: Container(
-                            padding: EdgeInsets.only(left: 0.sp, top: 0.sp),
-                            width: 25.w,
-                            height: 3.h,
-                            // decoration: BoxDecoration(
-                            //   borderRadius: BorderRadius.circular(20.sp),
-                            //   color: DataColors.blusky,
-                            // ),
-                            child: Center(
-                              child: Text(
-                                'Lihat Semua',
-                                style: TextStyle(
-                                  fontSize: 9.5.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: DataColors.Neutral400,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // InkWell(
+                        //   onTap: () => showMaterialModalBottomSheet(
+                        //       context: context,
+                        //       // barrierColor: DataColors.primary,
+                        //       expand: false,
+                        //       bounce: true,
+                        //       builder: (context) => Lainnyav2Page(),
+                        //       enableDrag: true,
+                        //       shape: RoundedRectangleBorder(
+                        //           borderRadius: BorderRadius.only(
+                        //               topLeft: Radius.circular(10.sp),
+                        //               topRight: Radius.circular(10.sp)))),
+                        //   child: Container(
+                        //     padding: EdgeInsets.only(left: 0.sp, top: 0.sp),
+                        //     width: 25.w,
+                        //     height: 3.h,
+                        //     // decoration: BoxDecoration(
+                        //     //   borderRadius: BorderRadius.circular(20.sp),
+                        //     //   color: DataColors.blusky,
+                        //     // ),
+                        //     child: Center(
+                        //       child: Text(
+                        //         'Lihat Semua',
+                        //         style: TextStyle(
+                        //           fontSize: 9.5.sp,
+                        //           fontWeight: FontWeight.w600,
+                        //           color: DataColors.Neutral400,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
 
-                    SizedBox(
-                      height: 15.sp,
-                    ),
+                    // SizedBox(
+                    //   height: 15.sp,
+                    // ),
                     FutureBuilder(
                       future: controller.checkwisuda(data['nim']),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Center(
-                            child: CircularProgressIndicator(
-                                color: DataColors.primary700),
+                          return Container(
+                            height: 60.sp,
+                            width: double.infinity,
+                            color: DataColors.white,
                           );
                         } else {
                           if (controller.hsmsg ==
                                   "Terdaftar sebagai peserta wisuda" &&
                               controller.hsmsg.isNotEmpty) {
-                            return ResponsiveGridRow(
-                              children: [
-                                ResponsiveGridCol(
-                                  xs: 3,
-                                  md: 1,
-                                  child: InkWell(
-                                    onTap: () =>
-                                        Get.toNamed(RoutName.kategoriakademik),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            padding: EdgeInsets.all(8.sp),
-                                            decoration: BoxDecoration(
-                                                color: DataColors.blusky,
-                                                borderRadius:
-                                                    BorderRadius.circular(30)),
-                                            child: SvgPicture.asset(
-                                              'assets/images/dashboard/icon/akademik.svg',
-                                              height: 25.sp,
-                                              width: 25.sp,
-                                              color: HexColor("#3C5595"),
-                                            )),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          'Akademik',
-                                          style: TextStyle(
-                                              fontSize: 10.sp,
-                                              fontWeight: FontWeight.w700,
-                                              color: DataColors.primary700),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        const SizedBox(
-                                          height: 15,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                ResponsiveGridCol(
-                                  xs: 3,
-                                  md: 2,
-                                  child: InkWell(
-                                    onTap: () => Get.toNamed(RoutName.kategori),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            padding: EdgeInsets.all(8.sp),
-                                            decoration: BoxDecoration(
-                                                color: DataColors.blusky,
-                                                borderRadius:
-                                                    BorderRadius.circular(30)),
-                                            child: SvgPicture.asset(
-                                              'assets/images/dashboard/icon/keuangan.svg',
-                                              height: 25.sp,
-                                              width: 25.sp,
-                                              color: HexColor("#3C5595"),
-                                            )),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          'Keuangan',
-                                          style: TextStyle(
-                                              fontSize: 10.sp,
-                                              fontWeight: FontWeight.w700,
-                                              color: DataColors.primary700),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        // const SizedBox(
-                                        //   height: 15,
-                                        // ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                ResponsiveGridCol(
-                                  xs: 3,
-                                  md: 2,
-                                  child: InkWell(
-                                    onTap: () => Get.toNamed(
-                                        RoutName.kategorinonakademik),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            padding: EdgeInsets.all(8.sp),
-                                            decoration: BoxDecoration(
-                                                color: DataColors.blusky,
-                                                borderRadius:
-                                                    BorderRadius.circular(30)),
-                                            child: SvgPicture.asset(
-                                              'assets/images/dashboard/icon/nonakademik.svg',
-                                              height: 25.sp,
-                                              width: 25.sp,
-                                              color: HexColor("#3C5595"),
-                                            )),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          'Non Akademik',
-                                          style: TextStyle(
-                                              fontSize: 10.sp,
-                                              fontWeight: FontWeight.w700,
-                                              color: DataColors.primary700),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        const SizedBox(
-                                          height: 15,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                ResponsiveGridCol(
-                                  xs: 3,
-                                  md: 2,
-                                  child: InkWell(
-                                    onTap: () => Get.to(WisudaPage()),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            padding: const EdgeInsets.all(15),
-                                            decoration: BoxDecoration(
-                                                color: DataColors.blusky,
-                                                borderRadius:
-                                                    BorderRadius.circular(30)),
-                                            child: SvgPicture.asset(
-                                              'assets/images/dashboard/icon/akademik.svg',
-                                            )),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          'Wisuda',
-                                          style: TextStyle(
-                                              fontSize: 10.sp,
-                                              fontWeight: FontWeight.w700,
-                                              color: DataColors.primary700),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        const SizedBox(
-                                          height: 15,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                ResponsiveGridCol(
-                                  xs: 3,
-                                  md: 2,
-                                  child: InkWell(
-                                    onTap: () {
-                                      Get.to(Libraryv2());
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            padding: EdgeInsets.all(3.sp),
-                                            decoration: BoxDecoration(
-                                                color: DataColors.blusky,
-                                                borderRadius:
-                                                    BorderRadius.circular(30)),
-                                            child: SvgPicture.asset(
-                                              'assets/images/dashboard/icon/library.svg',
-                                              color: HexColor("#3C5595"),
-                                              height: 35.sp,
-                                              width: 35.sp,
-                                              fit: BoxFit.fill,
-                                            )),
-                                        SizedBox(
-                                          height: 4.sp,
-                                        ),
-                                        Text(
-                                          'E-Library',
-                                          style: TextStyle(
-                                              fontSize: 10.sp,
-                                              fontWeight: FontWeight.w700,
-                                              color: DataColors.primary700),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        // SizedBox(
-                                        //   height: 15.sp,
-                                        // ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
+                            return Kategori();
                           } else {
-                            return ResponsiveGridRow(
-                              children: [
-                                ResponsiveGridCol(
-                                  xs: 3,
-                                  md: 2,
-                                  child: InkWell(
-                                    onTap: () =>
-                                        Get.toNamed(RoutName.kategoriakademik),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            padding: EdgeInsets.all(8.sp),
-                                            decoration: BoxDecoration(
-                                                color: DataColors.blusky,
-                                                borderRadius:
-                                                    BorderRadius.circular(30)),
-                                            child: SvgPicture.asset(
-                                              'assets/images/dashboard/icon/akademik.svg',
-                                              height: 25.sp,
-                                              width: 25.sp,
-                                              color: HexColor("#3C5595"),
-                                            )),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          'Akademik',
-                                          style: TextStyle(
-                                              fontSize: 10.sp,
-                                              fontWeight: FontWeight.w700,
-                                              color: DataColors.primary700),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        const SizedBox(
-                                          height: 15,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                ResponsiveGridCol(
-                                  xs: 3,
-                                  md: 2,
-                                  child: InkWell(
-                                    onTap: () => Get.toNamed(RoutName.kategori),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            padding: EdgeInsets.all(8.sp),
-                                            decoration: BoxDecoration(
-                                                color: DataColors.blusky,
-                                                borderRadius:
-                                                    BorderRadius.circular(30)),
-                                            child: SvgPicture.asset(
-                                              'assets/images/dashboard/icon/keuangan.svg',
-                                              height: 25.sp,
-                                              width: 25.sp,
-                                              color: HexColor("#3C5595"),
-                                            )),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          'Keuangan',
-                                          style: TextStyle(
-                                              fontSize: 10.sp,
-                                              fontWeight: FontWeight.w700,
-                                              color: DataColors.primary700),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        // const SizedBox(
-                                        //   height: 15,
-                                        // ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                ResponsiveGridCol(
-                                  xs: 3,
-                                  md: 2,
-                                  child: InkWell(
-                                    onTap: () => Get.toNamed(
-                                        RoutName.kategorinonakademik),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            padding: EdgeInsets.all(8.sp),
-                                            decoration: BoxDecoration(
-                                                color: DataColors.blusky,
-                                                borderRadius:
-                                                    BorderRadius.circular(30)),
-                                            child: SvgPicture.asset(
-                                              'assets/images/dashboard/icon/nonakademik.svg',
-                                              height: 25.sp,
-                                              width: 25.sp,
-                                              color: HexColor("#3C5595"),
-                                            )),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          'Non Akademik',
-                                          style: TextStyle(
-                                              fontSize: 10.sp,
-                                              fontWeight: FontWeight.w700,
-                                              color: DataColors.primary700),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        const SizedBox(
-                                          height: 15,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // ResponsiveGridCol(
-                                //   xs: 3,
-                                //   md: 2,
-                                //   child: InkWell(
-                                //     onTap: () => Get.to(WisudaPage()),
-                                //     child: Column(
-                                //       children: [
-                                //         Container(
-                                //             padding: const EdgeInsets.all(15),
-                                //             decoration: BoxDecoration(
-                                //                 color: DataColors.blusky,
-                                //                 borderRadius:
-                                //                     BorderRadius.circular(30)),
-                                //             child: SvgPicture.asset(
-                                //               'assets/images/dashboard/icon/akademik.svg',
-                                //             )),
-                                //         const SizedBox(
-                                //           height: 5,
-                                //         ),
-                                //         Text(
-                                //           'Wisuda',
-                                //           style: TextStyle(
-                                //               fontSize: 10.sp,
-                                //               fontWeight: FontWeight.w700,
-                                //               color: DataColors.primary700),
-                                //           textAlign: TextAlign.center,
-                                //         ),
-                                //         const SizedBox(
-                                //           height: 15,
-                                //         ),
-                                //       ],
-                                //     ),
-                                //   ),
-                                // ),
-                                ResponsiveGridCol(
-                                  xs: 3,
-                                  md: 2,
-                                  child: InkWell(
-                                    onTap: () {
-                                      Get.to(Libraryv2());
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            padding: EdgeInsets.all(3.sp),
-                                            decoration: BoxDecoration(
-                                                color: DataColors.blusky,
-                                                borderRadius:
-                                                    BorderRadius.circular(30)),
-                                            child: SvgPicture.asset(
-                                              'assets/images/dashboard/icon/library.svg',
-                                              color: HexColor("#3C5595"),
-                                              height: 35.sp,
-                                              width: 35.sp,
-                                              fit: BoxFit.fill,
-                                            )),
-                                        SizedBox(
-                                          height: 4.sp,
-                                        ),
-                                        Text(
-                                          'E-Library',
-                                          style: TextStyle(
-                                              fontSize: 10.sp,
-                                              fontWeight: FontWeight.w700,
-                                              color: DataColors.primary700),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        // SizedBox(
-                                        //   height: 15.sp,
-                                        // ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
+                            return Kategori2();
                           }
                         }
                       },
@@ -609,7 +231,7 @@ class DashboardPage extends GetView<DashboardController> {
                     //end Kategori
 
                     SizedBox(
-                      height: 7.sp,
+                      height: 10.sp,
                     ),
 
                     //chart IPK
@@ -812,6 +434,344 @@ class DashboardPage extends GetView<DashboardController> {
               ),
             ),
           ));
+  }
+}
+
+class Kategori2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: 10.sp),
+      child: ResponsiveGridRow(
+        children: [
+          ResponsiveGridCol(
+            xs: 3,
+            md: 2,
+            child: InkWell(
+              onTap: () => Get.toNamed(RoutName.kategoriakademik),
+              child: Column(
+                children: [
+                  Container(
+                      padding: EdgeInsets.all(8.sp),
+                      decoration: BoxDecoration(
+                          color: DataColors.blusky,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: SvgPicture.asset(
+                        'assets/images/dashboard/icon/akademik.svg',
+                        height: 25.sp,
+                        width: 25.sp,
+                        color: HexColor("#3C5595"),
+                      )),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Akademik',
+                    style: TextStyle(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w700,
+                        color: DataColors.primary700),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          ResponsiveGridCol(
+            xs: 3,
+            md: 2,
+            child: InkWell(
+              onTap: () => Get.toNamed(RoutName.kategori),
+              child: Column(
+                children: [
+                  Container(
+                      padding: EdgeInsets.all(8.sp),
+                      decoration: BoxDecoration(
+                          color: DataColors.blusky,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: SvgPicture.asset(
+                        'assets/images/dashboard/icon/keuangan.svg',
+                        height: 25.sp,
+                        width: 25.sp,
+                        color: HexColor("#3C5595"),
+                      )),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Keuangan',
+                    style: TextStyle(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w700,
+                        color: DataColors.primary700),
+                    textAlign: TextAlign.center,
+                  ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
+                ],
+              ),
+            ),
+          ),
+          ResponsiveGridCol(
+            xs: 3,
+            md: 2,
+            child: InkWell(
+              onTap: () => Get.toNamed(RoutName.kategorinonakademik),
+              child: Column(
+                children: [
+                  Container(
+                      padding: EdgeInsets.all(8.sp),
+                      decoration: BoxDecoration(
+                          color: DataColors.blusky,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: SvgPicture.asset(
+                        'assets/images/dashboard/icon/nonakademik.svg',
+                        height: 25.sp,
+                        width: 25.sp,
+                        color: HexColor("#3C5595"),
+                      )),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Non Akademik',
+                    style: TextStyle(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w700,
+                        color: DataColors.primary700),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          ResponsiveGridCol(
+            xs: 3,
+            md: 2,
+            child: InkWell(
+              onTap: () {
+                Get.to(Libraryv2());
+              },
+              child: Column(
+                children: [
+                  Container(
+                      padding: EdgeInsets.all(3.sp),
+                      decoration: BoxDecoration(
+                          color: DataColors.blusky,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: SvgPicture.asset(
+                        'assets/images/dashboard/icon/library.svg',
+                        color: HexColor("#3C5595"),
+                        height: 35.sp,
+                        width: 35.sp,
+                        fit: BoxFit.fill,
+                      )),
+                  SizedBox(
+                    height: 4.sp,
+                  ),
+                  Text(
+                    'E-Library',
+                    style: TextStyle(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w700,
+                        color: DataColors.primary700),
+                    textAlign: TextAlign.center,
+                  ),
+                  // SizedBox(
+                  //   height: 15.sp,
+                  // ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Kategori extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          InkWell(
+            onTap: () => Get.toNamed(RoutName.kategoriakademik),
+            child: Column(
+              children: [
+                Container(
+                    padding: EdgeInsets.all(8.sp),
+                    decoration: BoxDecoration(
+                        color: DataColors.blusky,
+                        borderRadius: BorderRadius.circular(30)),
+                    child: SvgPicture.asset(
+                      'assets/images/dashboard/icon/akademik.svg',
+                      height: 25.sp,
+                      width: 25.sp,
+                      color: HexColor("#3C5595"),
+                    )),
+                SizedBox(
+                  height: 5.sp,
+                ),
+                Text(
+                  'Akademik',
+                  style: TextStyle(
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w700,
+                      color: DataColors.primary700),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 8.sp,
+          ),
+          InkWell(
+            onTap: () => Get.toNamed(RoutName.kategori),
+            child: Column(
+              children: [
+                Container(
+                    padding: EdgeInsets.all(8.sp),
+                    decoration: BoxDecoration(
+                        color: DataColors.blusky,
+                        borderRadius: BorderRadius.circular(30)),
+                    child: SvgPicture.asset(
+                      'assets/images/dashboard/icon/keuangan.svg',
+                      height: 25.sp,
+                      width: 25.sp,
+                      color: HexColor("#3C5595"),
+                    )),
+                SizedBox(
+                  height: 5.sp,
+                ),
+                Text(
+                  'Keuangan',
+                  style: TextStyle(
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w700,
+                      color: DataColors.primary700),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 8.sp,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 14.sp, right: 7.sp),
+            child: InkWell(
+              onTap: () => Get.toNamed(RoutName.kategorinonakademik),
+              child: Column(
+                children: [
+                  Container(
+                      padding: EdgeInsets.all(8.sp),
+                      decoration: BoxDecoration(
+                          color: DataColors.blusky,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: SvgPicture.asset(
+                        'assets/images/dashboard/icon/nonakademik.svg',
+                        height: 25.sp,
+                        width: 25.sp,
+                        color: HexColor("#3C5595"),
+                      )),
+                  SizedBox(
+                    height: 5.sp,
+                  ),
+                  Text(
+                    'Non\nAkademik',
+                    style: TextStyle(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w700,
+                        color: DataColors.primary700),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 8.sp,
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 10.sp),
+            child: InkWell(
+              onTap: () => Get.to(WisudaPage()),
+              child: Column(
+                children: [
+                  Container(
+                      padding: EdgeInsets.all(8.sp),
+                      decoration: BoxDecoration(
+                          color: DataColors.blusky,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Image.asset(
+                        'assets/icon/graduation-hat.png',
+                        height: 25.sp,
+                        width: 25.sp,
+                        color: HexColor("#3C5595"),
+                      )),
+                  SizedBox(
+                    height: 5.sp,
+                  ),
+                  Text(
+                    'Wisuda',
+                    style: TextStyle(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w700,
+                        color: DataColors.primary700),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 8.sp,
+          ),
+          InkWell(
+            onTap: () {
+              Get.snackbar("Hi", "Coming Soon");
+            },
+            child: Column(
+              children: [
+                Container(
+                    padding: EdgeInsets.all(3.sp),
+                    decoration: BoxDecoration(
+                        color: DataColors.blusky,
+                        borderRadius: BorderRadius.circular(30)),
+                    child: SvgPicture.asset(
+                      'assets/images/dashboard/icon/library.svg',
+                      height: 35.sp,
+                      width: 35.sp,
+                      color: HexColor("#3C5595"),
+                    )),
+                SizedBox(
+                  height: 5.sp,
+                ),
+                Text(
+                  'E-Library',
+                  style: TextStyle(
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w700,
+                      color: DataColors.primary700),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

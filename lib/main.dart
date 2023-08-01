@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gostradav1/app/bindings/bindings.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:gostradav1/app/routes/app_page.dart';
 import 'package:gostradav1/app/routes/rout_name.dart';
@@ -15,7 +18,6 @@ import 'package:gostradav1/app/ui/pages/kategori/riwayat_bayar/riwayat_bayar.dar
 import 'package:gostradav1/app/ui/pages/library/detailbookv2.dart';
 import 'package:gostradav1/app/ui/pages/library/detailsearch.dart';
 import 'package:gostradav1/app/ui/pages/library/libraryv2.dart';
-
 
 import 'package:gostradav1/app/ui/pages/navigation/chat.dart';
 import 'package:gostradav1/app/ui/pages/notifikasi/notifikasi.dart';
@@ -31,7 +33,9 @@ import 'package:sizer/sizer.dart';
 /// Define a top-level named handler which background/terminated messages will
 /// call.
 ///
+///
 /// To verify things are working, check out the native platform logs.
+/// 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
@@ -76,6 +80,16 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // _requestStoragePermission;
+  if (Platform.isAndroid) {
+    AndroidDeviceInfo androidInfo = await DeviceInfoPlugin().androidInfo;
+    if (int.parse(androidInfo.version.release.split('.')[0]) >= 10) {
+      // Jika versi Android adalah 10 atau di atasnya
+      // await Permission.manageExternalStorage.request();
+      
+      await Permission.manageExternalStorage.request();
+    }
+  }
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -183,7 +197,8 @@ void main() async {
       print("allowed");
     }
   });
-  runApp(const MyApp());
+  
+ runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -196,7 +211,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             fontFamily: 'Poppins', scaffoldBackgroundColor: Colors.white),
-        home:SplashPage(),
+        home: SplashPage(),
         builder: (context, child) {
           return MediaQuery(
             data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
@@ -208,3 +223,69 @@ class MyApp extends StatelessWidget {
     });
   }
 }
+
+
+// Future<void> checkStoragePermission() async {
+//   if (Platform.isAndroid) {
+//     AndroidDeviceInfo androidInfo = await DeviceInfoPlugin().androidInfo;
+//     if (int.parse(androidInfo.version.release.split('.')[0]) >= 10) {
+//       // Jika versi Android adalah 10 atau di atasnya
+//       // await Permission.manageExternalStorage.request();
+      
+//       await _requestStoragePermission;
+//     }
+//   }
+// }
+
+
+// // Fungsi untuk meminta izin sebelum aplikasi dimulai.
+
+// Future<void> _requestStoragePermission(BuildContext context) async {
+//     showModalBottomSheet(
+//         context: context,
+//         builder: (BuildContext context) {
+//           return Container(
+//             height: 200,
+//             decoration: BoxDecoration(
+//                 color: Colors.black,
+//                 borderRadius: BorderRadius.only(
+//                     topLeft: Radius.circular(10.sp),
+//                     topRight: Radius.circular(10.sp))),
+//             child: Column(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 Padding(
+//                   padding: EdgeInsets.only(top: 10.sp),
+//                   child: Image.asset('assets/icon/folder.png',
+//                       height: 15.sp, width: 15.sp),
+//                 ),
+//                 SizedBox(height: 10.sp),
+//                 DefaultTextStyle(
+//                   style: TextStyle(fontSize: 12.sp, color: Colors.blue),
+//                   child: const Text(
+//                     'Aplikasi Memerlukan Izin Akses Penyimpanan',
+//                     textAlign: TextAlign.center,
+//                   ),
+//                 ),
+//                 SizedBox(height: 10.sp),
+//                 InkWell(
+//                   onTap: () {
+//                     Navigator.of(context).pop();
+//                     Permission.manageExternalStorage.isGranted;
+//                   },
+//                   child: DefaultTextStyle(
+//                       style: TextStyle(fontSize: 12.sp, color: Colors.blue),
+//                       child: const Text("Izinkan")),
+//                 ),
+//                 SizedBox(height: 5.sp),
+//                 InkWell(
+//                   onTap: () => Navigator.of(context).pop(),
+//                   child: DefaultTextStyle(
+//                       style: TextStyle(fontSize: 12.sp, color: Colors.blue),
+//                       child: const Text("Tolak")),
+//                 ),
+//               ],
+//             ),
+//           );
+//         });
+//   }

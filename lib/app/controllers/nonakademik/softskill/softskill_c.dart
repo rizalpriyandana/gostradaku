@@ -18,7 +18,8 @@ class SoftSkillController extends GetxController {
   RxString filePath = ''.obs;
   var isLoading = false.obs;
   String tpmhs = "M";
-  String pathurlpdf = "";
+  String pathurlpdfmhs = "";
+  String pathurlpdfortu = "";
   List<String> periode = [];
   List<String> idperiode = [];
   List<EditSoftSkillModel> editsoftskilllist = [];
@@ -180,7 +181,7 @@ class SoftSkillController extends GetxController {
     }
   }
 
-  myqr(nim, jenis) async {
+  myqrmhs(nim, jenis) async {
     final Map<String, dynamic> dataBody = {
       QrModel.nim: nim,
       QrModel.jenis: jenis
@@ -193,7 +194,26 @@ class SoftSkillController extends GetxController {
       if (dataku['error'] == true) {
         return null;
       }else{
-        pathurlpdf = dataku['data'];
+        pathurlpdfmhs = dataku['data'];
+      }
+    } else {
+      Get.snackbar("Go-Strada","Gagal Memuat Data");
+    }
+  }
+  myqrortu(nim, jenis) async {
+    final Map<String, dynamic> dataBody = {
+      QrModel.nim: nim,
+      QrModel.jenis: jenis
+    };
+    var response = await http.post(
+        Uri.parse("https://siakad.strada.ac.id/mobile/wisuda/my_graduation"),
+        body: dataBody);
+    if (response.statusCode == 200) {
+      var dataku = jsonDecode(response.body);
+      if (dataku['error'] == true) {
+        return null;
+      }else{
+        pathurlpdfortu = dataku['data'];
       }
     } else {
       Get.snackbar("Go-Strada","Gagal Memuat Data");

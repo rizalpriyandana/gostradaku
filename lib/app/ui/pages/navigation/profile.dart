@@ -6,6 +6,7 @@ import 'package:gostradav1/app/controllers/auth/auth_c.dart';
 import 'package:gostradav1/app/controllers/profile/profile_c.dart';
 import 'package:gostradav1/app/ui/pages/edit_profile/edit_profile.dart';
 import 'package:gostradav1/app/ui/theme/color.dart';
+import 'package:sizer/sizer.dart';
 
 class ProfilePage extends StatelessWidget {
   final c = Get.find<AuthController>();
@@ -75,7 +76,7 @@ class ProfilePage extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 20.0),
+                                  padding: EdgeInsets.only(left: 0.sp),
                                   child: Text(
                                     x.datalist[0].data![0].nama,
                                     style: TextStyle(
@@ -97,7 +98,7 @@ class ProfilePage extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 20.0),
+                                  padding: EdgeInsets.only(left: 0.sp),
                                   child: Text(
                                     x.datalist[0].data![0].nim,
                                     style: TextStyle(
@@ -119,7 +120,7 @@ class ProfilePage extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 20.0),
+                                  padding:  EdgeInsets.only(left: 0.sp),
                                   child: ConstrainedBox(
                                     constraints: BoxConstraints(
                                       maxWidth: size.width / 1.5,
@@ -146,7 +147,7 @@ class ProfilePage extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 20.0),
+                                  padding:EdgeInsets.only(left: 0.sp),
                                   child: ConstrainedBox(
                                     constraints: BoxConstraints(
                                       maxWidth: size.width / 1.5,
@@ -249,7 +250,9 @@ class ProfilePage extends StatelessWidget {
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.zero,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.snackbar("Hi","Coming Soon");
+                            },
                             child: Row(
                               children: [
                                 Expanded(

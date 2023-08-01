@@ -6,11 +6,21 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:gostradav1/app/data/models/login_m.dart';
+import 'package:gostradav1/app/data/models/test_m.dart';
 import 'package:gostradav1/app/routes/rout_name.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:path/path.dart' as path;
+
+
 
 class AuthController extends GetxController {
   final box = GetStorage().obs;
+  String pathurlpdfmhs = "";
+  String pathurlpdfortu = "";
+  String downloadedFilePath = "";
+  String downloadedFilePath2 = "";
   var isVisible = true.obs;
   var errorMsg = false.obs;
   var errorPas = false.obs;
@@ -44,6 +54,8 @@ class AuthController extends GetxController {
           return "salah";
         } else {
           // login berhasil
+          // await myqrmhs(user['nim'], "M");
+          // await myqrortu(user['nim'], "O");
           box.value.write('dataUser', {
             "username": user['nim'],
             "password": user['nim'],
@@ -52,9 +64,9 @@ class AuthController extends GetxController {
             "name": user['name'],
             "id_fakul": user["id_fakultas"]
           });
-          isLoading.value = false;
 
           // go to dashboard page
+          isLoading.value = false;
           Get.offNamed(RoutName.root);
           // print(fcmToken);
           // FlutterClipboard.copy(fcmToken.toString())
@@ -161,4 +173,113 @@ class AuthController extends GetxController {
   }
   // end logout
 
+  myqrmhs(nim, jenis) async {
+    final Map<String, dynamic> dataBody = {
+      QrModel.nim: nim,
+      QrModel.jenis: jenis
+    };
+    var response = await http.post(
+        Uri.parse("https://siakad.strada.ac.id/mobile/wisuda/my_graduation"),
+        body: dataBody);
+    if (response.statusCode == 200) {
+      var dataku = jsonDecode(response.body);
+      if (dataku['error'] == true) {
+        return null;
+      } else {
+        pathurlpdfmhs = dataku['data'];
+        // String filename = path.basename(pathurlpdfmhs);
+        // await downloadFile(pathurlpdfmhs, filename);
+        // isLoading.value = false;
+      }
+    } else {
+      Get.snackbar("Go-Strada", "Gagal Memuat Data");
+    }
+  }
+
+  myqrortu(nim, jenis) async {
+    final Map<String, dynamic> dataBody = {
+      QrModel.nim: nim,
+      QrModel.jenis: jenis
+    };
+    var response = await http.post(
+        Uri.parse("https://siakad.strada.ac.id/mobile/wisuda/my_graduation"),
+        body: dataBody);
+    if (response.statusCode == 200) {
+      var dataku = jsonDecode(response.body);
+      if (dataku['error'] == true) {
+        return null;
+      } else {
+        pathurlpdfortu = dataku['data'];
+        // String filename = path.basename(pathurlpdfortu);
+        // await downloadFile2(pathurlpdfortu, filename);
+        // isLoading.value = false;
+      }
+    } else {
+      Get.snackbar("Go-Strada", "Gagal Memuat Data");
+    }
+  }
+
+Future<File> downloadFile(String url, String fileName) async {
+  var httpClient = http.Client();
+  var req = await httpClient.get(Uri.parse(url));
+  var bytes = req.bodyBytes;
+  String dir = (await getApplicationDocumentsDirectory()).path;
+  File file = File('$dir/$fileName');
+  await file.writeAsBytes(bytes);
+  downloadedFilePath = file.path;
+  return file;
+}
+Future<File> downloadFile2(String url, String fileName) async {
+  var httpClient = http.Client();
+  var req = await httpClient.get(Uri.parse(url));
+  var bytes = req.bodyBytes;
+  String dir = (await getApplicationDocumentsDirectory()).path;
+  File file = File('$dir/$fileName');
+  await file.writeAsBytes(bytes);
+  downloadedFilePath2 = file.path;
+  return file;
+}
+
+  // Future<void> _downloadFile(String url, String fileName) async {
+  //   var httpClient = http.Client();
+  //   var req = await httpClient.get(Uri.parse(url));
+  //   var bytes = req.bodyBytes;
+
+  //   // Get external storage directory
+  //   String savePath = "/storage/emulated/0/Download";
+  //   Directory? externalDir = await getExternalStorageDirectory();
+  //   if (externalDir == null) {
+  //     Fluttertoast.showToast(
+  //       msg: "Gagal mendapatkan direktori penyimpanan eksternal",
+  //       toastLength: Toast.LENGTH_SHORT,
+  //     );
+  //     return;
+  //   }
+
+  //   // Save file to external storage
+  //   File file = File('$savePath/$fileName');
+  //   await file.writeAsBytes(bytes);
+  //   downloadedFilePath = file.path;
+  // }
+  // Future<void> _downloadFile2(String url, String fileName) async {
+  //   var httpClient = http.Client();
+  //   var req = await httpClient.get(Uri.parse(url));
+  //   var bytes = req.bodyBytes;
+
+  //   // Get external storage directory
+  //   String savePath = "/storage/emulated/0/Download";
+  //   Directory? externalDir = await getExternalStorageDirectory();
+  //   if (externalDir == null) {
+  //     Fluttertoast.showToast(
+  //       msg: "Gagal mendapatkan direktori penyimpanan eksternal",
+  //       toastLength: Toast.LENGTH_SHORT,
+  //     );
+  //     return;
+  //   }
+
+  //   // Save file to external storage
+  //   File file = File('$savePath/$fileName');
+  //   await file.writeAsBytes(bytes);
+  //   downloadedFilePath2 = file.path;
+  // }
 }

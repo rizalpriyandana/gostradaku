@@ -72,6 +72,7 @@ class _Lainnyav2PageState extends State<Lainnyav2Page>
                           textAlign: TextAlign.center,
                         ),
                       ),
+                      
                     ],
                   ),
                 ),
