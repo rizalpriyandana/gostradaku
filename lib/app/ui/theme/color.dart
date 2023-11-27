@@ -17,6 +17,7 @@ abstract class DataColors {
   static final Color primary400 = HexColor('#7D98CE');
   static final Color primary800 = HexColor('#1A2A64');
   static final Color backgroundbutton = HexColor('#3C5595');
+  static final Color bluepurple = HexColor('#505797');
   static final Color Neutral300 = HexColor('#BABABA');
   static final Color Neutral200 = HexColor('#E8E8E8');
   static final Color primary600 = HexColor('#3C5595');
@@ -26,4 +27,10 @@ abstract class DataColors {
   static final Color Neutral400 = HexColor('#757575');
   static final Color Neutral100 = HexColor('#F3F3F3');
   static final Color Neutral600 = HexColor('#161313');
+  static final Color greywhite= HexColor('#F0F0F0');
+  static final Color greyclassy= HexColor('#AAA9BC');
+  static final Color blackshadow= HexColor('#33000000');
+  static final Color bluebutton= HexColor('#5BC0DE');
+  static final Color bluek= HexColor('#8FAECE');
+  static final Color solidred= HexColor('#FF0000');
 }

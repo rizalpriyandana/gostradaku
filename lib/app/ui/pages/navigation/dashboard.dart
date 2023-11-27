@@ -6,17 +6,18 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:gostradav1/app/controllers/auth/auth_c.dart';
 import 'package:gostradav1/app/controllers/dashboard/dashboard_c.dart';
+import 'package:gostradav1/app/controllers/library/library_c.dart';
 import 'package:gostradav1/app/controllers/profile/profile_c.dart';
+import 'package:gostradav1/app/controllers/wisuda_c.dart';
 import 'package:gostradav1/app/routes/rout_name.dart';
 import 'package:gostradav1/app/ui/pages/kategori/lainnya/lainnya.dart';
 import 'package:gostradav1/app/ui/pages/kategori/lainnya/lainnyav2.dart';
 import 'package:gostradav1/app/ui/pages/kategori/nonakademik/wisuda.dart';
-import 'package:gostradav1/app/ui/pages/library/library.dart';
 import 'package:gostradav1/app/ui/pages/library/libraryv2.dart';
 import 'package:gostradav1/app/ui/theme/color.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+// import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -27,17 +28,21 @@ import '../pengumuman/pengumumanpage.dart';
 
 class DashboardPage extends GetView<DashboardController> {
   final auth = Get.find<AuthController>();
-  final c = Get.find<DashboardController>();
+  // final c = Get.find<DashboardController>();
   final box = GetStorage();
   // String? message = await check
 
   @override
   Widget build(BuildContext context) {
     ProfileController cc = Get.put(ProfileController());
+    LibraryController lc = Get.put(LibraryController());
+    DashboardController dc = Get.put(DashboardController());
+    // WisudaController wic = Get.put(WisudaController());
     List<ChartData> chartData = [];
     Map data = box.read("dataUser") as Map<String, dynamic>;
+    // Map profile = box.read("dataProfile") as Map<String, dynamic>;
     final Size size = MediaQuery.of(context).size;
-    return Obx(() => cc.isLoading.isTrue
+    return Obx(() => dc.isLoading.isTrue &&  cc.isLoading.isTrue
         ? Scaffold(
             body: Center(
                 child: LoadingAnimationWidget.fourRotatingDots(
@@ -65,8 +70,8 @@ class DashboardPage extends GetView<DashboardController> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(50),
                               image: DecorationImage(
-                                  image: NetworkImage(
-                                      cc.datalist[0].data![0].photo),
+                                  image:
+                                      NetworkImage(dc.urlPhoto + data['photo']),
                                   fit: BoxFit.cover),
                             ),
                           ),
@@ -168,65 +173,71 @@ class DashboardPage extends GetView<DashboardController> {
                             color: DataColors.primary700,
                           ),
                         ),
-                        // InkWell(
-                        //   onTap: () => showMaterialModalBottomSheet(
-                        //       context: context,
-                        //       // barrierColor: DataColors.primary,
-                        //       expand: false,
-                        //       bounce: true,
-                        //       builder: (context) => Lainnyav2Page(),
-                        //       enableDrag: true,
-                        //       shape: RoundedRectangleBorder(
-                        //           borderRadius: BorderRadius.only(
-                        //               topLeft: Radius.circular(10.sp),
-                        //               topRight: Radius.circular(10.sp)))),
-                        //   child: Container(
-                        //     padding: EdgeInsets.only(left: 0.sp, top: 0.sp),
-                        //     width: 25.w,
-                        //     height: 3.h,
-                        //     // decoration: BoxDecoration(
-                        //     //   borderRadius: BorderRadius.circular(20.sp),
-                        //     //   color: DataColors.blusky,
-                        //     // ),
-                        //     child: Center(
-                        //       child: Text(
-                        //         'Lihat Semua',
-                        //         style: TextStyle(
-                        //           fontSize: 9.5.sp,
-                        //           fontWeight: FontWeight.w600,
-                        //           color: DataColors.Neutral400,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
+                        InkWell(
+                          onTap: () {} ,
+                          // showMaterialModalBottomSheet(
+                          //     context: context,
+                          //     // barrierColor: DataColors.primary,
+                          //     expand: false,
+                          //     bounce: true,
+                          //     builder: (context) => Lainnyav2Page(),
+                          //     enableDrag: true,
+                          //     shape: RoundedRectangleBorder(
+                          //         borderRadius: BorderRadius.only(
+                          //             topLeft: Radius.circular(10.sp),
+                          //             topRight: Radius.circular(10.sp)))
+                          //             ),
+                          child: Container(
+                            padding: EdgeInsets.only(left: 0.sp, top: 0.sp),
+                            width: 25.w,
+                            height: 3.h,
+                            // decoration: BoxDecoration(
+                            //   borderRadius: BorderRadius.circular(20.sp),
+                            //   color: DataColors.blusky,
+                            // ),
+                            child: Center(
+                              child: Text(
+                                'Lihat Semua',
+                                style: TextStyle(
+                                  fontSize: 9.5.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: DataColors.Neutral400,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
 
                     // SizedBox(
                     //   height: 15.sp,
                     // ),
-                    FutureBuilder(
-                      future: controller.checkwisuda(data['nim']),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Container(
-                            height: 60.sp,
-                            width: double.infinity,
-                            color: DataColors.white,
-                          );
-                        } else {
-                          if (controller.hsmsg ==
-                                  "Terdaftar sebagai peserta wisuda" &&
-                              controller.hsmsg.isNotEmpty) {
-                            return Kategori();
-                          } else {
-                            return Kategori2();
-                          }
-                        }
-                      },
-                    ),
+                    dc.hsmsg == "Terdaftar sebagai peserta wisuda" &&
+                            dc.hsmsg.isNotEmpty
+                        ? Kategori()
+                        : Kategori2(),
+                    // FutureBuilder(
+                    //   future: controller.checkwisuda(data['nim']),
+                    //   builder: (context, snapshot) {
+                    //     if (snapshot.connectionState ==
+                    //         ConnectionState.waiting) {
+                    //       return Container(
+                    //         height: 60.sp,
+                    //         width: double.infinity,
+                    //         color: DataColors.white,
+                    //       );
+                    //     } else {
+                    //       if (controller.hsmsg ==
+                    //               "Terdaftar sebagai peserta wisuda" &&
+                    //           controller.hsmsg.isNotEmpty) {
+                    //         return Kategori();
+                    //       } else {
+                    //         return Kategori2();
+                    //       }
+                    //     }
+                    //   },
+                    // ),
 
                     //end Kategori
 
@@ -247,13 +258,13 @@ class DashboardPage extends GetView<DashboardController> {
                     SizedBox(height: 5.sp),
 
                     FutureBuilder<dynamic>(
-                        future: c.getipk(data["nim"]),
+                        future: dc.getipk(data["nim"]),
                         builder: (context, snapshot) {
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
                               return SfCartesianChart(
                                 legend: Legend(isVisible: false),
-                                tooltipBehavior: c.tooltipBehavior,
+                                tooltipBehavior: dc.tooltipBehavior,
                                 primaryXAxis: CategoryAxis(
                                     labelIntersectAction:
                                         AxisLabelIntersectAction.multipleRows),
@@ -271,7 +282,7 @@ class DashboardPage extends GetView<DashboardController> {
                                     // DIsable legend
                                     legend: Legend(isVisible: false),
                                     // Enable tooltip
-                                    tooltipBehavior: c.tooltipBehavior,
+                                    tooltipBehavior: dc.tooltipBehavior,
                                     primaryXAxis: CategoryAxis(
                                         // Axis labels will be placed in multiple rows, if it is intersected
                                         labelIntersectAction:
@@ -330,12 +341,12 @@ class DashboardPage extends GetView<DashboardController> {
 
                     // slider image
                     FutureBuilder<dynamic>(
-                        future: c.getpengumuman(),
+                        future: dc.getpengumuman(),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             return Container(
                                 child: CarouselSlider(
-                                    items: List.generate(c.urlImage.length,
+                                    items: List.generate(dc.urlImage.length,
                                         (index) {
                                       return Builder(
                                         builder: (BuildContext context) {
@@ -353,7 +364,7 @@ class DashboardPage extends GetView<DashboardController> {
                                               decoration: BoxDecoration(
                                                   image: DecorationImage(
                                                       image: AssetImage(
-                                                          c.urlImage[index]),
+                                                          dc.urlImage[index]),
                                                       fit: BoxFit.cover),
                                                   borderRadius:
                                                       BorderRadius.circular(8)),
@@ -368,7 +379,7 @@ class DashboardPage extends GetView<DashboardController> {
                                                         maxWidth: size.width,
                                                       ),
                                                       child: AutoSizeText(
-                                                        c.capsSlider[index],
+                                                        dc.capsSlider[index],
                                                         style: const TextStyle(
                                                           fontSize: 20.0,
                                                           color: Colors.white,
@@ -557,7 +568,7 @@ class Kategori2 extends StatelessWidget {
             md: 2,
             child: InkWell(
               onTap: () {
-                Get.to(Libraryv2());
+                Get.toNamed(RoutName.library);
               },
               child: Column(
                 children: [
@@ -740,7 +751,7 @@ class Kategori extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              Get.snackbar("Hi", "Coming Soon");
+             Get.toNamed(RoutName.library);
             },
             child: Column(
               children: [

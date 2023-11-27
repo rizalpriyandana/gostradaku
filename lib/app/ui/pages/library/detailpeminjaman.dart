@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:gostradav1/app/ui/pages/library/historypeminjaman.dart';
-import 'package:gostradav1/app/ui/pages/library/library.dart';
 import 'package:gostradav1/app/ui/theme/color.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:sizer/sizer.dart';
@@ -278,7 +277,7 @@ class _DetailPeminjamanBukuState extends State<DetailPeminjamanBuku> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.to(LibraryPage());
+                      // Get.to(LibraryPage());
                     },
                     child: Container(
                       width: 135.sp,

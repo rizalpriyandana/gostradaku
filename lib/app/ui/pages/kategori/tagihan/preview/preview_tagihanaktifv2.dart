@@ -147,16 +147,16 @@ class _PreviewTagihanAktifv2State extends State<PreviewTagihanAktifv2> {
               // ),
               Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 0.sp),
-                    child: Center(
-                      child: QrImage(
-                        data: array[0].toString(),
-                        version: QrVersions.auto,
-                        size: 150.0,
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: EdgeInsets.symmetric(vertical: 0.sp),
+                  //   child: Center(
+                  //     child: QrImage(
+                  //       data: array[0].toString(),
+                  //       version: QrVersions.auto,
+                  //       size: 150.0,
+                  //     ),
+                  //   ),
+                  // ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 20.sp),
                     child: Text(

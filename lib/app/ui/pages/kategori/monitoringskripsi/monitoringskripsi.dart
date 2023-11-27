@@ -164,27 +164,27 @@ class _MonitoringSkripsiPageState extends State<MonitoringSkripsiPage> {
                   style: TextStyle(fontSize: 12.sp),
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    prefixIcon: IconButton(
-                      onPressed: () {
-                        pickImage();
-                      },
-                      icon: (image == null)
-                          ? Icon(
-                              Icons.add_a_photo,
-                              color: DataColors.primary700,
-                            )
-                          : Badge(
-                              badgeContent: Text(
-                                '1',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 8.sp),
-                              ),
-                              child: Icon(
-                                Icons.add_a_photo,
-                                color: DataColors.primary700,
-                              ),
-                            ),
-                    ),
+                    // prefixIcon: IconButton(
+                    //   onPressed: () {
+                    //     pickImage();
+                    //   },
+                    //   icon: (image == null)
+                    //       ? Icon(
+                    //           Icons.add_a_photo,
+                    //           color: DataColors.primary700,
+                    //         )
+                    //       : Badge(
+                    //           badgeContent: Text(
+                    //             '1',
+                    //             style: TextStyle(
+                    //                 color: Colors.white, fontSize: 8.sp),
+                    //           ),
+                    //           child: Icon(
+                    //             Icons.add_a_photo,
+                    //             color: DataColors.primary700,
+                    //           ),
+                    //         ),
+                    // ),
                     suffixIcon: IconButton(
                       onPressed: () {
                         if (image != null || txt.text != "") {
@@ -309,28 +309,28 @@ class _adminchatState extends State<adminchat> {
                                 style: TextStyle(fontSize: 12.sp),
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  prefixIcon: IconButton(
-                                    onPressed: () {
-                                      pickImage();
-                                    },
-                                    icon: (image == null)
-                                        ? Icon(
-                                            Icons.add_a_photo,
-                                            color: DataColors.primary700,
-                                          )
-                                        : Badge(
-                                            badgeContent: Text(
-                                              '1',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 8.sp),
-                                            ),
-                                            child: Icon(
-                                              Icons.add_a_photo,
-                                              color: DataColors.primary700,
-                                            ),
-                                          ),
-                                  ),
+                                  // prefixIcon: IconButton(
+                                  //   onPressed: () {
+                                  //     pickImage();
+                                  //   },
+                                  //   icon: (image == null)
+                                  //       ? Icon(
+                                  //           Icons.add_a_photo,
+                                  //           color: DataColors.primary700,
+                                  //         )
+                                  //       : Badge(
+                                  //           badgeContent: Text(
+                                  //             '1',
+                                  //             style: TextStyle(
+                                  //                 color: Colors.white,
+                                  //                 fontSize: 8.sp),
+                                  //           ),
+                                  //           child: Icon(
+                                  //             Icons.add_a_photo,
+                                  //             color: DataColors.primary700,
+                                  //           ),
+                                  //         ),
+                                  // ),
                                   suffixIcon: IconButton(
                                     onPressed: () {
                                       if (image != null || txt.text != "") {
@@ -518,30 +518,30 @@ class _userchatState extends State<userchat> {
                             style: TextStyle(fontSize: 12.sp),
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              prefixIcon: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    pickImage();
-                                  });
-                                },
-                                icon: (image == null)
-                                    ? Icon(
-                                        Icons.add_a_photo,
-                                        color: DataColors.primary700,
-                                      )
-                                    : Badge(
-                                        badgeContent: Text(
-                                          '1',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 8.sp),
-                                        ),
-                                        child: Icon(
-                                          Icons.add_a_photo,
-                                          color: DataColors.primary700,
-                                        ),
-                                      ),
-                              ),
+                              // prefixIcon: IconButton(
+                              //   onPressed: () {
+                              //     setState(() {
+                              //       pickImage();
+                              //     });
+                              //   },
+                              //   icon: (image == null)
+                              //       ? Icon(
+                              //           Icons.add_a_photo,
+                              //           color: DataColors.primary700,
+                              //         )
+                              //       : Badge(
+                              //           badgeContent: Text(
+                              //             '1',
+                              //             style: TextStyle(
+                              //                 color: Colors.white,
+                              //                 fontSize: 8.sp),
+                              //           ),
+                              //           child: Icon(
+                              //             Icons.add_a_photo,
+                              //             color: DataColors.primary700,
+                              //           ),
+                              //         ),
+                              // ),
                               suffixIcon: IconButton(
                                 onPressed: () {
                                   if (image != null || txt.text != "") {

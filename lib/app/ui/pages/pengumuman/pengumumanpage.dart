@@ -1,15 +1,16 @@
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:sizer/sizer.dart';
 import '../../../controllers/dashboard/dashboard_c.dart';
 import '../../theme/color.dart';
 import 'package:intl/intl.dart';
 
 class PengumumanPage extends StatelessWidget {
-  @override
+
   DashboardController controller = Get.put(DashboardController());
   Widget build(BuildContext context) {
     var i = Get.arguments;

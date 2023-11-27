@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:gostradav1/app/controllers/auth/auth_c.dart';
+import 'package:gostradav1/app/controllers/dashboard/dashboard_c.dart';
 import 'package:gostradav1/app/controllers/profile/profile_c.dart';
 import 'package:gostradav1/app/ui/pages/edit_profile/edit_profile.dart';
 import 'package:gostradav1/app/ui/theme/color.dart';
 import 'package:sizer/sizer.dart';
 
 class ProfilePage extends StatelessWidget {
+  DashboardController dc = Get.put(DashboardController());
   final c = Get.find<AuthController>();
-  final x = Get.put(ProfileController());
+  ProfileController x = Get.put(ProfileController());
   final box = GetStorage();
   @override
   Widget build(BuildContext context) {
@@ -78,7 +80,7 @@ class ProfilePage extends StatelessWidget {
                                 Padding(
                                   padding: EdgeInsets.only(left: 0.sp),
                                   child: Text(
-                                    x.datalist[0].data![0].nama,
+                                    data['name'],
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w700,
@@ -100,7 +102,7 @@ class ProfilePage extends StatelessWidget {
                                 Padding(
                                   padding: EdgeInsets.only(left: 0.sp),
                                   child: Text(
-                                    x.datalist[0].data![0].nim,
+                                    data['nim'],
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w700,
@@ -186,7 +188,7 @@ class ProfilePage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(50),
                                 image: DecorationImage(
                                     image: NetworkImage(
-                                        x.datalist[0].data![0].photo),
+                                        dc.urlPhoto + data['photo']),
                                     fit: BoxFit.cover),
                               ),
                             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:gostradav1/app/controllers/tagihan_c.dart';
@@ -25,24 +26,24 @@ class TagihanPage extends StatelessWidget {
     Map data = box.read("dataUser") as Map<String, dynamic>;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Tagihan',
           style: TextStyle(
             fontWeight: FontWeight.w600,
+            color: DataColors.primary700
           ),
         ),
         backgroundColor: Colors.white,
-        foregroundColor: DataColors.primary700,
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: const Icon(
-                  Icons.arrow_back_ios), // Put icon of your preference.
-              onPressed: () {
-                Get.back();
-              },
-            );
-          },
+        leading: Padding(
+          padding: EdgeInsets.only(top: 11.sp, left: 10.sp),
+          child: GestureDetector(
+            onTap: () => Get.back(),
+            child: FaIcon(
+              FontAwesomeIcons.angleLeft,
+              color: DataColors.primary800,
+              size: 18.sp,
+            ),
+          ),
         ),
         elevation: 0,
         centerTitle: true,

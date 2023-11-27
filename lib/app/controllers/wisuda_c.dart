@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:get_storage/get_storage.dart';
@@ -24,6 +24,7 @@ class WisudaController extends GetxController {
   @override
   void onInit() {
     myqr(data['nim']);
+  
     // myqrmhs(data['nim'], "M");
     // myqrortu(data['nim'], "O");
     // downloadFile(c.pathurlpdfmhs, path.basename(c.pathurlpdfmhs));

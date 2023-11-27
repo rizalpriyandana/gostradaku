@@ -5,7 +5,6 @@ import 'package:gostradav1/app/controllers/request_surat_c.dart';
 import 'package:gostradav1/app/ui/theme/color.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:sizer/sizer.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:intl/intl.dart';
 
 class DataRequestPage extends StatelessWidget {
@@ -32,7 +31,7 @@ class DataRequestPage extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                showMaterialModalBottomSheet(
+                showModalBottomSheet(
                   backgroundColor: Colors.transparent,
                   context: context,
                   builder: (context) {
@@ -52,8 +51,7 @@ class DataRequestPage extends StatelessWidget {
                                           topLeft: Radius.circular(30.sp),
                                           topRight: Radius.circular(30.sp))),
                                   child: SingleChildScrollView(
-                                    controller:
-                                        ModalScrollController.of(context),
+                                    
                                     child: Column(
                                       children: [
                                         Container(

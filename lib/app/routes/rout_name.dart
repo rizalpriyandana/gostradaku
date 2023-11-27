@@ -38,4 +38,14 @@ abstract class RoutName {
   static const editsoftskill = '/editsoftskill';
   static const wisuda = '/wisuda';
   static const lihatundagan = '/lihatundangan';
+  static const library = '/library';
+  static const detailbook = '/detailbook';
+  static const historypeminjaman = '/historypeminjaman';
+  static const peminjaman = '/peminjaman';
+  static const popularbook = '/popularbook';
+  static const koleksibook = '/koleksibook';
+  static const bookmark = '/bookmark';
+  static const booking = '/booking';
+  static const kunjungan = '/kunjungan';
+  static const registrasi = '/registrasi';
 }

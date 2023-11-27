@@ -9,11 +9,10 @@ class OnBaoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    // final size = MediaQuery.of(context).size;
     return Scaffold(
       body: IntroductionScreen(
-        isTopSafeArea: true,
-        isBottomSafeArea: true,
+        
         // globalBackgroundColor: DataColors.blusky,
         pages: pages,
         onDone: () {

@@ -7,11 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:gostradav1/app/data/models/login_m.dart';
 import 'package:gostradav1/app/data/models/test_m.dart';
+import 'package:gostradav1/app/data/simpandata/simpandatalogin.dart';
 import 'package:gostradav1/app/routes/rout_name.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart' as path;
+import 'package:gostradav1/app/data/models/profile.dart';
 
 
 
@@ -21,6 +23,8 @@ class AuthController extends GetxController {
   String pathurlpdfortu = "";
   String downloadedFilePath = "";
   String downloadedFilePath2 = "";
+  String urlphoto = "";
+  List<ProfileModel> datalist = [];
   var isVisible = true.obs;
   var errorMsg = false.obs;
   var errorPas = false.obs;
@@ -53,6 +57,7 @@ class AuthController extends GetxController {
           Get.offNamed(RoutName.login);
           return "salah";
         } else {
+          
           // login berhasil
           // await myqrmhs(user['nim'], "M");
           // await myqrortu(user['nim'], "O");
@@ -66,6 +71,7 @@ class AuthController extends GetxController {
           });
 
           // go to dashboard page
+          StorageUtil.setLoggedIn(true);
           isLoading.value = false;
           Get.offNamed(RoutName.root);
           // print(fcmToken);
@@ -83,6 +89,8 @@ class AuthController extends GetxController {
     }
     //http request post
   }
+
+  
 
   resetpassword(String nim) async {
     final Map<String, dynamic> dataBody = {
@@ -165,6 +173,8 @@ class AuthController extends GetxController {
     await box.value.remove('dataUser');
     await box.value.remove('nomorva');
     await box.value.remove('nominal');
+    await box.value.remove('dataProfile');
+    StorageUtil.setLoggedIn(false);
     errorMsg.value = false;
     nimC.clear();
     passC.clear();

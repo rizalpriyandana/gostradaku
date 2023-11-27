@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'dart:io';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
@@ -35,27 +36,25 @@ class _SoftSkillPageState extends State<SoftSkillPage> {
     Map data = box.read("dataUser") as Map<String, dynamic>;
     // Map datas = box.read("dataSoftSkill") as Map<String, dynamic>;
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size(0, 40),
-        child: AppBar(
-          title: Text(
-            "Soft Skill",
-            style: TextStyle(
-                color: DataColors.primary700, fontWeight: FontWeight.w600),
-          ),
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: Colors.white,
-          foregroundColor: DataColors.primary700,
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: const Icon(Icons.arrow_back_ios),
-                onPressed: () {
-                  Get.toNamed(RoutName.kategorinonakademik);
-                },
-              );
-            },
+      appBar: AppBar(
+        title: Text(
+          "Soft Skill",
+          style: TextStyle(
+              color: DataColors.primary700, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        foregroundColor: DataColors.primary700,
+        leading: Padding(
+          padding: EdgeInsets.only(top: 11.sp, left: 10.sp),
+          child: GestureDetector(
+            onTap: () => Get.back(),
+            child: FaIcon(
+              FontAwesomeIcons.angleLeft,
+              color: DataColors.primary800,
+              size: 18.sp,
+            ),
           ),
         ),
       ),
@@ -119,15 +118,9 @@ class _SoftSkillPageState extends State<SoftSkillPage> {
                                 datum.data![0].date.toIso8601String(),
                                 datum.data![0].file
                               ]);
-                              
                             },
                             onTapHapus: () {
-                              Get.defaultDialog(
-                                  onConfirm: () =>
-                                      controller.delete(datum.data![0].id),
-                                  onCancel: () => dispose(),
-                                  middleText:
-                                      "Apakah anda yakin ingin hapus data?");
+                              Get.dialog(widget);
                             },
                             onTapLihat: () {
                               if (datum.data![0].file.endsWith('.pdf')) {
@@ -257,422 +250,417 @@ class ListData extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Container(
-        padding: const EdgeInsets.all(10),
+        // padding: const EdgeInsets.all(0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: DataColors.primary800, width: 1.5),
-          color: DataColors.primary200,
+          color: DataColors.primary100,
         ),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    DateFormat('dd MMMM yyyy').format(date),
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.only(left: 8.sp, right: 8.sp,),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 8.sp,),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            DateFormat('dd MMMM yyyy').format(date),
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              color: DataColors.primary800,
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              (periode != null)
+                                  ? Container(
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(6),
+                                        color: DataColors.primary800,
+                                      ),
+                                      child: Text(
+                                        periode.toString(),
+                                        style: TextStyle(
+                                          color: DataColors.blusky,
+                                          fontSize: 9.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    )
+                                  : Container(
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(6),
+                                        color: DataColors.primary800,
+                                      ),
+                                      child: Text(
+                                        "-",
+                                        style: TextStyle(
+                                          color: DataColors.blusky,
+                                          fontSize: 9.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                              SizedBox(
+                                width: 5.sp,
+                              ),
+                              (status == "Disetujui")
+                                  ? Container(
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(6),
+                                        color: DataColors.primary700,
+                                      ),
+                                      child: Text(
+                                        status,
+                                        style: TextStyle(
+                                          color: DataColors.blusky,
+                                          fontSize: 9.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    )
+                                  : Container(
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(6),
+                                        color: DataColors.Neutral100,
+                                      ),
+                                      child: Text(
+                                        status,
+                                        style: TextStyle(
+                                            color: DataColors.primary700,
+                                            fontSize: 9.sp,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              status == "Disetujui"
+                                  ? Container(
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(6),
+                                        color: DataColors.primary700,
+                                      ),
+                                      child: Text(
+                                        "Oleh : $admin",
+                                        style: TextStyle(
+                                          color: DataColors.blusky,
+                                          fontSize: 9.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox.shrink(),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10.sp,),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          status == "Pengajuan"
+                              ? InkWell(
+                                  onTap: () {
+                                    onTapEdit();
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.sp),
+                                      border: Border.all(
+                                          color: DataColors.primary, width: 1.sp),
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 2.sp, horizontal: 4.sp),
+                                    child: Text(
+                                      "Edit",
+                                      style: TextStyle(
+                                          color: DataColors.primary, fontSize: 10.sp),
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox.shrink(),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          status == "Pengajuan"
+                              ? InkWell(
+                                  onTap: () {
+                                    onTapHapus();
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.sp),
+                                      border: Border.all(
+                                          color: Colors.redAccent, width: 1.sp),
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 2.sp, horizontal: 4.sp),
+                                    child: Text(
+                                      "Hapus",
+                                      style: TextStyle(
+                                          color: Colors.redAccent, fontSize: 10.sp),
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox.shrink(),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Divider(
+                  height: 5,
+                  thickness: 2,
+                  indent: 0,
+                  endIndent: 0,
+                  color: DataColors.primary700,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  name,
+                  style: TextStyle(
                       color: DataColors.primary800,
-                      fontSize: 10.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      (periode != null)
-                          ? Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
-                                color: DataColors.primary700,
-                              ),
-                              child: Text(
-                                periode.toString(),
-                                style: TextStyle(
-                                  color: DataColors.blusky,
-                                  fontSize: 9.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            )
-                          : Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
-                                color: DataColors.primary700,
-                              ),
-                              child: Text(
-                                "-",
-                                style: TextStyle(
-                                  color: DataColors.blusky,
-                                  fontSize: 9.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                      SizedBox(
-                        width: 5.sp,
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w600),
+                ),
+                catatan == ""
+                    ? Text(
+                        "-",
+                        style: TextStyle(
+                            color: DataColors.bluepurple,
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w300),
+                      )
+                    : Text(
+                        catatan,
+                        style: TextStyle(
+                            color: DataColors.bluepurple,
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w300),
                       ),
-                      (status == "Disetujui")
-                          ? Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
-                                color: DataColors.primary700,
-                              ),
-                              child: Text(
-                                status,
-                                style: TextStyle(
-                                  color: DataColors.blusky,
-                                  fontSize: 9.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            )
-                          : Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
-                                color: DataColors.Neutral200,
-                              ),
-                              child: Text(
-                                status,
-                                style: TextStyle(
-                                    color: DataColors.primary,
-                                    fontSize: 9.sp,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      status == "Disetujui"
-                          ? Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
-                                color: DataColors.primary700,
-                              ),
-                              child: Text(
-                                "Oleh : $admin",
-                                style: TextStyle(
-                                  color: DataColors.blusky,
-                                  fontSize: 9.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            )
-                          : const SizedBox.shrink(),
-                    ],
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  status == "Pengajuan"
-                      ? InkWell(
-                          onTap: () {
-                            onTapEdit();
-                          },
-                          child: Container(
+
+                SizedBox(
+                  height: 5.sp,
+                ),
+                Row(
+                  children: [
+                    nilaiA != null
+                        ? Container(
+                            padding: const EdgeInsets.all(4),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.sp),
-                              border: Border.all(
-                                  color: DataColors.primary, width: 1.sp),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 2.sp, horizontal: 4.sp),
+                                borderRadius: BorderRadius.circular(4),
+                                color: DataColors.primary800),
                             child: Text(
-                              "Edit",
+                              "Nilai Angka : $nilaiA".toString(),
                               style: TextStyle(
-                                  color: DataColors.primary, fontSize: 10.sp),
+                                  fontSize: 10.sp,
+                                  color: DataColors.bluesky,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          )
+                        : Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: DataColors.primary800),
+                            child: Text(
+                              "Nilai Angka : 0",
+                              style: TextStyle(
+                                  fontSize: 10.sp,
+                                  color: DataColors.bluesky,
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
-                        )
-                      : const SizedBox.shrink(),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  status == "Pengajuan"
-                      ? InkWell(
-                          onTap: () {
-                            onTapHapus();
-                          },
-                          child: Container(
+                    SizedBox(
+                      width: 5.sp,
+                    ),
+                    nilaiH != null
+                        ? Container(
+                            padding: const EdgeInsets.all(4),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.sp),
-                              border: Border.all(
-                                  color: Colors.redAccent, width: 1.sp),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 2.sp, horizontal: 4.sp),
+                                borderRadius: BorderRadius.circular(4),
+                                color: DataColors.primary800),
                             child: Text(
-                              "Hapus",
+                              "Nilai Huruf : $nilaiH".toString(),
                               style: TextStyle(
-                                  color: Colors.redAccent, fontSize: 10.sp),
+                                  fontSize: 10.sp,
+                                  color: DataColors.bluesky,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          )
+                        : Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: DataColors.primary800),
+                            child: Text(
+                              "Nlai Huruf : -",
+                              style: TextStyle(
+                                  fontSize: 10.sp,
+                                  color: DataColors.bluesky,
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
-                        )
-                      : const SizedBox.shrink(),
-                ],
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Divider(
-            height: 5,
-            thickness: 2,
-            indent: 0,
-            endIndent: 0,
-            color: DataColors.primary700,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            name,
-            style: TextStyle(
-                color: DataColors.primary800,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w600),
-          ),
-          Text(
-            catatan,
-            style: TextStyle(
-                color: DataColors.primary,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w300),
-          ),
-          SizedBox(
-            height: 5.sp,
-          ),
-          Row(
-            children: [
-              nilaiA != null
-                  ? Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: DataColors.primary800),
-                      child: Text(
-                        "Nilai Angka : $nilaiA".toString(),
-                        style: TextStyle(
-                            fontSize: 10.sp,
-                            color: DataColors.skyBlue,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    )
-                  : Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: DataColors.primary800),
-                      child: Text(
-                        "Nilai Angka : 0",
-                        style: TextStyle(
-                            fontSize: 10.sp,
-                            color: DataColors.skyBlue,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-              SizedBox(
-                width: 5.sp,
-              ),
-              nilaiH != null
-                  ? Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: DataColors.primary800),
-                      child: Text(
-                        "Nilai Huruf : $nilaiH".toString(),
-                        style: TextStyle(
-                            fontSize: 10.sp,
-                            color: DataColors.skyBlue,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    )
-                  : Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: DataColors.primary800),
-                      child: Text(
-                        "Nlai Huruf : -",
-                        style: TextStyle(
-                            fontSize: 10.sp,
-                            color: DataColors.skyBlue,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-            ],
-          ),
-          SizedBox(
-            height: 5.sp,
-          ),
-          status == "Disetujui"
-              ? Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      color: DataColors.primary800),
-                  child: Text(
-                    "Catatan Admin : $statusNote",
-                    style: TextStyle(
-                        fontSize: 10.sp,
-                        color: DataColors.skyBlue,
-                        fontWeight: FontWeight.w600),
-                  ),
-                )
-              : const SizedBox.shrink(),
-          SizedBox(
-            height: 5.sp,
-          ),
-          Divider(
-            height: 5,
-            thickness: 2,
-            indent: 0,
-            endIndent: 0,
-            color: DataColors.primary700,
-          ),
-          SizedBox(
-            height: 5.sp,
-          ),
-          InkWell(
-            onTap: () {
-              onTapLihat();
-              // if (fileUrl!.endsWith('.pdf')) {
-              //     Get.to(PDFView(
-              //       filePath: fileUrl,
-              //     ));
-              //   } else if (fileUrl!.endsWith('.jpg') ||
-              //       fileUrl!.endsWith('.jpeg') ||
-              //       fileUrl!.endsWith('.png')) {
-              //     Get.to(() => Scaffold(
-              //           appBar: PreferredSize(
-              //             preferredSize: const Size(0, 40),
-              //             child: AppBar(
-              //               title: Text(
-              //                 "Lihat Dokumen",
-              //                 style: TextStyle(
-              //                     color: DataColors.primary700,
-              //                     fontWeight: FontWeight.w600),
-              //               ),
-              //               centerTitle: true,
-              //               elevation: 0,
-              //               backgroundColor: Colors.white,
-              //               foregroundColor: DataColors.primary700,
-              //               leading: Builder(
-              //                 builder: (BuildContext context) {
-              //                   return IconButton(
-              //                     icon: const Icon(Icons.arrow_back_ios),
-              //                     onPressed: () {
-              //                       Get.back();
-              //                     },
-              //                   );
-              //                 },
-              //               ),
-              //             ),
-              //           ),
-              //           body: Padding(
-              //             padding: EdgeInsets.all(20.sp),
-              //             child: Center(
-              //               child: Image.network(fileUrl!),
-              //             ),
-              //           ),
-              //         ));
-              //   }
-            },
-            child: Container(
-              width: 115.sp,
-              padding: const EdgeInsets.all(7),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  color: DataColors.primary800),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.remove_red_eye,
-                    color: DataColors.skyBlue,
-                    size: 14.sp,
-                  ),
-                  SizedBox(
-                    width: 5.sp,
-                  ),
-                  Text(
-                    "Lihat Dokumen",
-                    style: TextStyle(
-                        fontSize: 11.sp,
-                        fontWeight: FontWeight.w600,
-                        color: DataColors.skyBlue),
-                  )
-                ],
-              ),
+                  ],
+                ),
+                SizedBox(
+                  height: 5.sp,
+                ),
+                status == "Disetujui"
+                    ? Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            color: DataColors.primary800),
+                        child: Text(
+                          "Catatan Admin : $statusNote",
+                          style: TextStyle(
+                              fontSize: 10.sp,
+                              color: DataColors.bluesky,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+                SizedBox(
+                  height: 5.sp,
+                ),
+                Divider(
+                  height: 5,
+                  thickness: 2,
+                  indent: 0,
+                  endIndent: 0,
+                  color: DataColors.primary700,
+                ),
+                SizedBox(
+                  height: 5.sp,
+                ),
+                
+                // ElevatedButton(
+                //     style: ElevatedButton.styleFrom(
+                //       side: BorderSide(width: 2.0, color: DataColors.primary),
+                //       backgroundColor: DataColors.primary800,
+                //       //foregroundColor: DataColors.skyBlue,
+                //       shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(4.0),
+                //       ),
+                //       padding:
+                //           EdgeInsets.symmetric(vertical: 10.sp, horizontal: 10.sp),
+                //     ),
+                //     onPressed: () {
+                //       if (fileUrl!.endsWith('.pdf')) {
+                //         Get.to(PDFView(
+                //           filePath: fileUrl,
+                //         ));
+                //       } else if (fileUrl!.endsWith('.jpg') ||
+                //           fileUrl!.endsWith('.jpeg') ||
+                //           fileUrl!.endsWith('.png')) {
+                //         Get.to(() => Scaffold(
+                //               appBar: PreferredSize(
+                //                 preferredSize: const Size(0, 40),
+                //                 child: AppBar(
+                //                   title: Text(
+                //                     "Lihat Dokumen",
+                //                     style: TextStyle(
+                //                         color: DataColors.skyBlue,
+                //                         fontWeight: FontWeight.w600),
+                //                   ),
+                //                   centerTitle: true,
+                //                   elevation: 0,
+                //                   backgroundColor: Colors.white,
+                //                   foregroundColor: DataColors.primary700,
+                //                   leading: Builder(
+                //                     builder: (BuildContext context) {
+                //                       return IconButton(
+                //                         icon: const Icon(Icons.arrow_back_ios),
+                //                         onPressed: () {
+                //                           Get.back();
+                //                         },
+                //                       );
+                //                     },
+                //                   ),
+                //                 ),
+                //               ),
+                //               body: Center(
+                //                 child: Image.network(fileUrl!),
+                //               ),
+                //             ));
+                //       }
+                //     },
+                //     child: Text(
+                //       "Lihat Dokumen",
+                //       style: TextStyle(fontSize: 10.sp, color: DataColors.primary600),
+                //     ))
+              ]),
+            ),
+            Padding(
+            padding: EdgeInsets.only(left: 5.sp, bottom: 5.sp),
+            child: Row(
+              children: [
+                fileUrl == null
+                    ? const SizedBox.shrink()
+                    : fileUrl!.endsWith('.pdf')
+                        ? Padding(
+                            padding: EdgeInsets.only(right: 5.sp),
+                            child: Image.asset(
+                              "assets/icon/pdf.png",
+                              height: 25.sp,
+                              width: 25.sp,
+                            ),
+                          )
+                        : fileUrl!.endsWith('.jpg') ||
+                                fileUrl!.endsWith('.png') ||
+                                fileUrl!.endsWith('.jpeg')
+                            ? Padding(
+                                padding: EdgeInsets.only(right: 5.sp),
+                                child: Image.asset(
+                                  "assets/icon/image.png",
+                                  height: 25.sp,
+                                  width: 25.sp,
+                                ),
+                              )
+                            : const SizedBox.shrink(),
+                InkWell(
+                  onTap: () {
+                    onTapLihat();
+                  },
+                  child: fileUrl == null
+                      ? const SizedBox.shrink()
+                      : Text(
+                          path.basename(fileUrl!),
+                          style: TextStyle(
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w600,
+                              color: DataColors.primary800),
+                        ),
+                ),
+              ],
             ),
           ),
-          // ElevatedButton(
-          //     style: ElevatedButton.styleFrom(
-          //       side: BorderSide(width: 2.0, color: DataColors.primary),
-          //       backgroundColor: DataColors.primary800,
-          //       //foregroundColor: DataColors.skyBlue,
-          //       shape: RoundedRectangleBorder(
-          //         borderRadius: BorderRadius.circular(4.0),
-          //       ),
-          //       padding:
-          //           EdgeInsets.symmetric(vertical: 10.sp, horizontal: 10.sp),
-          //     ),
-          //     onPressed: () {
-          //       if (fileUrl!.endsWith('.pdf')) {
-          //         Get.to(PDFView(
-          //           filePath: fileUrl,
-          //         ));
-          //       } else if (fileUrl!.endsWith('.jpg') ||
-          //           fileUrl!.endsWith('.jpeg') ||
-          //           fileUrl!.endsWith('.png')) {
-          //         Get.to(() => Scaffold(
-          //               appBar: PreferredSize(
-          //                 preferredSize: const Size(0, 40),
-          //                 child: AppBar(
-          //                   title: Text(
-          //                     "Lihat Dokumen",
-          //                     style: TextStyle(
-          //                         color: DataColors.skyBlue,
-          //                         fontWeight: FontWeight.w600),
-          //                   ),
-          //                   centerTitle: true,
-          //                   elevation: 0,
-          //                   backgroundColor: Colors.white,
-          //                   foregroundColor: DataColors.primary700,
-          //                   leading: Builder(
-          //                     builder: (BuildContext context) {
-          //                       return IconButton(
-          //                         icon: const Icon(Icons.arrow_back_ios),
-          //                         onPressed: () {
-          //                           Get.back();
-          //                         },
-          //                       );
-          //                     },
-          //                   ),
-          //                 ),
-          //               ),
-          //               body: Center(  
-          //                 child: Image.network(fileUrl!),
-          //               ),
-          //             ));
-          //       }
-          //     },
-          //     child: Text(
-          //       "Lihat Dokumen",
-          //       style: TextStyle(fontSize: 10.sp, color: DataColors.primary600),
-          //     ))
-        ]),
+          ],
+        ),
       ),
     );
   }
@@ -717,8 +705,7 @@ Future<void> _downloadFile(String url, String fileName) async {
   File file = File('$savePath/$fileName');
   await file.writeAsBytes(bytes);
 
-  Get.snackbar(
-      "File Berhasil didownload", "Directory $savePath$fileName");
+  Get.snackbar("File Berhasil didownload", "Directory $savePath$fileName");
   Get.to(Scaffold(
     appBar: PreferredSize(
       preferredSize: const Size(0, 40),

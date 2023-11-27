@@ -1,8 +1,10 @@
+import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:gostradav1/app/controllers/library/library_c.dart';
 import 'package:gostradav1/app/ui/pages/library/detailpeminjaman.dart';
-import 'package:gostradav1/app/ui/pages/library/library.dart';
 import 'package:gostradav1/app/ui/theme/color.dart';
 import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart';
@@ -16,23 +18,39 @@ class _FormPeminjamanState extends State<FormPeminjaman> {
   TextEditingController dateborrow = TextEditingController();
   TextEditingController datereturn = TextEditingController();
   TextEditingController namebook = TextEditingController();
-  TextEditingController labelbook = TextEditingController();
+  TextEditingController itemcodeku = TextEditingController();
   TextEditingController kategoribook = TextEditingController();
+  LibraryController lc = Get.find<LibraryController>();
 
   final FocusNode dateBorrowFocus = FocusNode();
 
+  List<String> availableItem = Get.arguments[0];
+  String? selectedValue;
   var dataku = Get.arguments;
+  List<String> itemcode = [];
+  bool isDropdown = false;
+  final box = GetStorage();
+  var index;
 
   @override
   void initState() {
-    namebook.text = dataku[0];
-    labelbook.text = dataku[2];
-    kategoribook.text = dataku[1];
+    DateTime currentDate = DateTime.now();
+    dateborrow.text = DateFormat('dd-MM-yyyy').format(currentDate);
+    DateTime returnDate = currentDate.add(const Duration(days: 7));
+    datereturn.text = DateFormat('dd-MM-yyyy').format(returnDate);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    Map data = box.read("dataUser") as Map<String, dynamic>;
+    itemcodeku.text = availableItem[0];
+    Widget widget;
+    if (availableItem.length == 1) {
+      isDropdown = false;
+    } else {
+      isDropdown = true;
+    }
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -60,6 +78,84 @@ class _FormPeminjamanState extends State<FormPeminjaman> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            isDropdown
+                ? widget = Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                        Text(
+                          "Item Code",
+                          style: TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.bold,
+                              color: DataColors.primary700),
+                        ),
+                        CustomDropdownButton2(
+                          buttonDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14.sp),
+                              border: Border.all(
+                                  color: DataColors.Neutral200, width: 1.5)),
+                          buttonWidth: 90.w,
+                          buttonHeight: 6.h,
+                          buttonPadding: EdgeInsets.all(10.sp),
+                          dropdownWidth: 90.w,
+                          hint: 'Pilih Periode',
+                          value: selectedValue,
+                          dropdownItems: availableItem
+                              .map((String itemCode) => itemCode)
+                              .toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              selectedValue = value;
+                            });
+                          },
+                        ),
+                      ])
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Item Code",
+                        style: TextStyle(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.bold,
+                            color: DataColors.primary700),
+                      ),
+                      SizedBox(
+                        height: 5.sp,
+                      ),
+                      TextFormField(
+                        readOnly: true,
+                        autocorrect: false,
+                        controller: itemcodeku,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(10.sp),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: DataColors.Neutral100),
+                              borderRadius: BorderRadius.circular(8.sp)),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: DataColors.Neutral100),
+                              borderRadius: BorderRadius.circular(8.sp)),
+                          labelStyle: TextStyle(
+                              fontSize: 10.sp, fontWeight: FontWeight.normal),
+                          isDense: true,
+                          filled: true,
+                          fillColor: DataColors.Neutral100,
+                          border: OutlineInputBorder(
+                            // borderSide:
+                            //     BorderSide(color: DataColors.Neutral100, width: 1.0),
+                            borderRadius: BorderRadius.circular(8.sp),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+            SizedBox(
+              height: 10.sp,
+            ),
             Text(
               "Nama Buku",
               style: TextStyle(
@@ -73,7 +169,7 @@ class _FormPeminjamanState extends State<FormPeminjaman> {
             TextFormField(
               readOnly: true,
               autocorrect: false,
-              controller: namebook,
+              initialValue: Get.arguments[1],
               textInputAction: TextInputAction.done,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
@@ -86,82 +182,6 @@ class _FormPeminjamanState extends State<FormPeminjaman> {
                     borderRadius: BorderRadius.circular(8.sp)),
                 labelStyle:
                     TextStyle(fontSize: 10.sp, fontWeight: FontWeight.normal),
-                isDense: true,
-                filled: true,
-                fillColor: DataColors.Neutral100,
-                border: OutlineInputBorder(
-                  // borderSide:
-                  //     BorderSide(color: DataColors.Neutral100, width: 1.0),
-                  borderRadius: BorderRadius.circular(8.sp),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10.sp,
-            ),
-            Text(
-              "Kategori Buku",
-              style: TextStyle(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.bold,
-                  color: DataColors.primary700),
-            ),
-            SizedBox(
-              height: 5.sp,
-            ),
-            TextFormField(
-              readOnly: true,
-              autocorrect: false,
-              controller: kategoribook,
-              textInputAction: TextInputAction.done,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(10.sp),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: DataColors.Neutral100),
-                    borderRadius: BorderRadius.circular(8.sp)),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: DataColors.Neutral100),
-                    borderRadius: BorderRadius.circular(8.sp)),
-                labelStyle:
-                    TextStyle(fontSize: 10.sp, fontWeight: FontWeight.normal),
-                isDense: true,
-                filled: true,
-                fillColor: DataColors.Neutral100,
-                border: OutlineInputBorder(
-                  // borderSide:
-                  //     BorderSide(color: DataColors.semigrey, width: 1.0),
-                  borderRadius: BorderRadius.circular(8.sp),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10.sp,
-            ),
-            Text(
-              "Nomor Label Buku",
-              style: TextStyle(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.bold,
-                  color: DataColors.primary700),
-            ),
-            SizedBox(
-              height: 5.sp,
-            ),
-            TextFormField(
-              readOnly: true,
-              autocorrect: false,
-              controller: labelbook,
-              textInputAction: TextInputAction.done,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(10.sp),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: DataColors.Neutral100),
-                    borderRadius: BorderRadius.circular(8.sp)),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: DataColors.Neutral100),
-                    borderRadius: BorderRadius.circular(8.sp)),
                 isDense: true,
                 filled: true,
                 fillColor: DataColors.Neutral100,
@@ -192,36 +212,39 @@ class _FormPeminjamanState extends State<FormPeminjaman> {
               controller: dateborrow,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10.sp),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: DataColors.Neutral100),
+                    borderRadius: BorderRadius.circular(8.sp)),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: DataColors.Neutral100),
+                    borderRadius: BorderRadius.circular(8.sp)),
+                labelStyle:
+                    TextStyle(fontSize: 10.sp, fontWeight: FontWeight.normal),
                 isDense: true,
-                hintText: 'Pilih Tanggal',
-                hintStyle: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 10.sp,
-                  fontWeight: FontWeight.w400,
-                  fontStyle: FontStyle.normal,
-                ),
+                filled: true,
+                fillColor: DataColors.Neutral100,
                 border: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: DataColors.semigrey, width: 1.0),
+                  // borderSide:
+                  //     BorderSide(color: DataColors.Neutral100, width: 1.0),
                   borderRadius: BorderRadius.circular(8.sp),
                 ),
               ),
               textInputAction: TextInputAction.done,
-              onTap: () async {
-                DateTime? picked = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(1900),
-                  lastDate: DateTime(2100),
-                );
-                if (picked != null) {
-                  dateborrow.text =
-                      DateFormat('dd-MM-yyyy').format(picked).toString();
-                  DateTime returnDate = picked.add(const Duration(days: 7));
-                  datereturn.text = DateFormat('dd-MM-yyy').format(returnDate);
-                  FocusScope.of(context).requestFocus(FocusNode());
-                }
-              },
+              // onTap: () async {
+              //   DateTime? picked = await showDatePicker(
+              //     context: context,
+              //     initialDate: DateTime.now(),
+              //     firstDate: DateTime(1900),
+              //     lastDate: DateTime(2100),
+              //   );
+              //   if (picked != null) {
+              //     dateborrow.text =
+              //         DateFormat('dd-MM-yyyy').format(picked).toString();
+              //     DateTime returnDate = picked.add(const Duration(days: 7));
+              //     datereturn.text = DateFormat('dd-MM-yyy').format(returnDate);
+              //     FocusScope.of(context).requestFocus(FocusNode());
+              //   }
+              // },
             ),
             SizedBox(
               height: 10.sp,
@@ -242,16 +265,22 @@ class _FormPeminjamanState extends State<FormPeminjaman> {
               controller: datereturn,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10.sp),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: DataColors.Neutral100),
+                    borderRadius: BorderRadius.circular(8.sp)),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: DataColors.Neutral100),
+                    borderRadius: BorderRadius.circular(8.sp)),
+                labelStyle:
+                    TextStyle(fontSize: 10.sp, fontWeight: FontWeight.normal),
                 isDense: true,
+                filled: true,
+                fillColor: DataColors.Neutral100,
                 border: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: DataColors.semigrey, width: 1.0),
+                  // borderSide:
+                  //     BorderSide(color: DataColors.Neutral100, width: 1.0),
                   borderRadius: BorderRadius.circular(8.sp),
                 ),
-                focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: DataColors.semigrey, width: 1.0),
-                    borderRadius: BorderRadius.circular(8.sp)),
               ),
               textInputAction: TextInputAction.done,
             ),
@@ -263,18 +292,21 @@ class _FormPeminjamanState extends State<FormPeminjaman> {
         margin: EdgeInsets.only(bottom: 10.sp, top: 2.sp),
         child: ElevatedButton(
             onPressed: () {
-              if (dateborrow.text.isNotEmpty) {
-                Get.to(DetailPeminjamanBuku(), arguments: [
-                  dataku[0],
-                  dataku[1],
-                  dataku[2],
-                  dateborrow.text,
-                  datereturn.text
-                ]);
+              DateTime tanggalPinjam =
+                  DateFormat('dd-MM-yyyy').parse(dateborrow.text);
+              DateTime tanggalKembali =
+                  DateFormat('dd-MM-yyyy').parse(datereturn.text);
+              String tanggalpinjam =
+                  DateFormat('yyyy-MM-dd').format(tanggalPinjam);
+              String tanggalkembali =
+                  DateFormat('yyyy-MM-dd').format(tanggalKembali);
 
-                Get.snackbar("Success", "Data Peminjaman Berhasil disimpan");
+              if (isDropdown) {
+                lc.addloan(selectedValue.toString(), data['nim'], tanggalpinjam,
+                    tanggalkembali);
               } else {
-                Get.snackbar("Galat", "Silahkan lengkapi formulir");
+                lc.addloan(itemcodeku.text, data['nim'], tanggalpinjam,
+                    tanggalkembali);
               }
             },
             style: ElevatedButton.styleFrom(
@@ -284,10 +316,21 @@ class _FormPeminjamanState extends State<FormPeminjaman> {
                     borderRadius: BorderRadius.circular(10.sp)),
                 padding:
                     EdgeInsets.symmetric(vertical: 10.sp, horizontal: 10.sp)),
-            child: Text(
-              "Simpan Data",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, color: DataColors.white),
+            child: Obx(
+              () => lc.loadingdata.isTrue
+                  ? const SizedBox(
+                      height: 15,
+                      width: 15,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 3,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    )
+                  : Text(
+                      "Simpan Data",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: DataColors.white),
+                    ),
             )),
       ),
     );

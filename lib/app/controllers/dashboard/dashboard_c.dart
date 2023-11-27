@@ -4,8 +4,11 @@ import 'dart:math';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:gostradav1/app/data/models/getipk.dart';
+import 'package:gostradav1/app/data/models/login_m.dart';
 import 'package:gostradav1/app/data/models/pengumuman_m.dart';
+import 'package:gostradav1/app/data/models/profile.dart';
 import 'package:gostradav1/app/ui/pages/kategori/penawaran_krs/penawaran_krs.dart';
 import 'package:gostradav1/app/ui/pages/navigation/dashboard.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -18,8 +21,13 @@ import '../../ui/pages/kategori/riwayat_bayar/riwayat_bayar.dart';
 import '../../ui/pages/navigation/chat.dart';
 
 class DashboardController extends GetxController {
-  String hsmsg = ""; 
+  String hsmsg = "";
+  String fakultas = ""; 
+  String prodi = ""; 
+  var isLoading = true.obs;
   final String urlPhoto = 'https://siakad.strada.ac.id/uploads/mhs/';
+  final box = GetStorage();
+  late Map data = box.read("dataUser") as Map<String, dynamic>;
   TooltipBehavior? tooltipBehavior;
 
   
@@ -51,8 +59,10 @@ class DashboardController extends GetxController {
 
   @override
   void onInit() {
+    
     tooltipBehavior = TooltipBehavior(enable: true);
-
+    checkwisuda(data['nim']);
+    // getprofile(data['nim']);
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       var payload = json.decode(message.data["data"]);
       RemoteNotification? notification = message.notification;
@@ -175,7 +185,34 @@ class DashboardController extends GetxController {
         return null;
       } else {
         hsmsg = dataku['msg'];
+        isLoading.value = false;
       }
+    }
+  }
+  getprofile(String nim) async {
+    final Map<String, dynamic> dataBody = {
+      LoginModel.username: nim
+    };
+    var response = await http.post(
+        Uri.parse("https://siakad.strada.ac.id/mobile/profile/get_profile"),
+        body: dataBody);
+    if (response.statusCode == 200) {
+      var user = jsonDecode(response.body);
+      if (user['error'] == true) {
+        //
+      } else {
+        // load berhasil
+        
+        // urlphoto = user['data']['photo'];
+        // var data = ProfileModel.fromJson(user);
+        fakultas = user['data']['fakultas'];
+        prodi = user['data']['prodi'];
+        isLoading.value = false;
+        
+        // Get.snackbar("Url", urlphoto);
+      }
+      
+      // isLoading.value = false;
     }
   }
 

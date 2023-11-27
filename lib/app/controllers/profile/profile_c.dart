@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 
 class ProfileController extends GetxController {
   final box = GetStorage();
+  String urlphoto = "";
   late Map data = box.read("dataUser") as Map<String, dynamic>;
 
   final String masterKRS =
@@ -30,15 +31,19 @@ class ProfileController extends GetxController {
         Uri.parse("https://siakad.strada.ac.id/mobile/profile/get_profile"),
         body: dataBody);
     if (response.statusCode == 200) {
-      user = jsonDecode(response.body);
+      var user = jsonDecode(response.body);
       if (user['error'] == true) {
         //
       } else {
         // load berhasil
-        dataMasterKrs = ProfileModel.fromJson(user);
-
+        var dataMasterKrs = ProfileModel.fromJson(user);
+        // urlphoto = user['data']['photo'];
         datalist.add(dataMasterKrs);
+        urlphoto = dataMasterKrs.data![0].photo;
+        
+        // Get.snackbar("Url", urlphoto);
       }
+      
       isLoading.value = false;
     }
   }

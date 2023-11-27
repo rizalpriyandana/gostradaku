@@ -167,13 +167,13 @@ class MonitoringPage extends StatelessWidget {
                                             SizedBox(
                                               height: 10.sp,
                                             ),
-                                            Text(
-                                              "${DateFormat('EEEE, d MMM yyyy', "id_ID").format(snapshot.data.absensi.data[index].date)} \n ${snapshot.data.absensi.data[index].jam}",
-                                              style: TextStyle(
-                                                  color: DataColors.Neutral400,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 10.sp),
-                                            ),
+                                            // Text(
+                                            //   "${DateFormat('EEEE, d MMM yyyy', "id_ID").format(snapshot.data.absensi.data[index].date)} \n ${snapshot.data.absensi.data[index].jam}",
+                                            //   style: TextStyle(
+                                            //       color: DataColors.Neutral400,
+                                            //       fontWeight: FontWeight.w400,
+                                            //       fontSize: 10.sp),
+                                            // ),
                                           ]),
                                     ),
                                   );
@@ -265,17 +265,17 @@ class JadwalHariIni extends StatelessWidget {
           SizedBox(
             height: 2.sp,
           ),
-          Container(
-              padding: EdgeInsets.all(4.sp),
-              decoration: BoxDecoration(
-                  color: DataColors.primary400,
-                  borderRadius: BorderRadius.circular(4.sp)),
-              child: Text(
-                  DateFormat("EEEE, d MMMM yyyy", "id_ID").format(tanggal),
-                  style: TextStyle(
-                      fontSize: 12.sp,
-                      color: DataColors.primary100,
-                      fontWeight: FontWeight.w600))),
+          // Container(
+          //     padding: EdgeInsets.all(4.sp),
+          //     decoration: BoxDecoration(
+          //         color: DataColors.primary400,
+          //         borderRadius: BorderRadius.circular(4.sp)),
+          //     child: Text(
+          //         DateFormat("EEEE, d MMMM yyyy", "id_ID").format(tanggal),
+          //         style: TextStyle(
+          //             fontSize: 12.sp,
+          //             color: DataColors.primary100,
+          //             fontWeight: FontWeight.w600))),
           SizedBox(
             height: 2.sp,
           ),

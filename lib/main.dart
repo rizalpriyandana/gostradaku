@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -5,7 +7,9 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:gostradav1/app/bindings/bindings.dart';
+import 'package:gostradav1/app/data/simpandata/simpandatalogin.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:gostradav1/app/routes/app_page.dart';
@@ -16,7 +20,6 @@ import 'package:gostradav1/app/ui/pages/kategori/nonakademik/wisuda.dart';
 import 'package:gostradav1/app/ui/pages/kategori/penawaran_krs/penawaran_krs.dart';
 import 'package:gostradav1/app/ui/pages/kategori/riwayat_bayar/riwayat_bayar.dart';
 import 'package:gostradav1/app/ui/pages/library/detailbookv2.dart';
-import 'package:gostradav1/app/ui/pages/library/detailsearch.dart';
 import 'package:gostradav1/app/ui/pages/library/libraryv2.dart';
 
 import 'package:gostradav1/app/ui/pages/navigation/chat.dart';
@@ -90,6 +93,8 @@ void main() async {
       await Permission.manageExternalStorage.request();
     }
   }
+  await GetStorage.init();
+  bool isLoggedIn = StorageUtil.isLoggedIn;
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -198,11 +203,14 @@ void main() async {
     }
   });
   
- runApp(const MyApp());
+ runApp(MyApp(isLoggedIn: isLoggedIn,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final bool isLoggedIn;
+  MyApp({
+    required this.isLoggedIn,
+    Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

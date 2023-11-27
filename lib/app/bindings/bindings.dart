@@ -14,9 +14,9 @@ class GlobalBinding implements Bindings {
     Get.lazyPut<SplashController>(() => SplashController());
     Get.lazyPut<OnboardController>(() => OnboardController());
     Get.put(AuthController());
-    Get.put(DashboardController());
+    
     Get.put(SoftSkillController());
-    Get.put(LibraryController());
     Get.put(NotifikasiController());
+    
   }
 }

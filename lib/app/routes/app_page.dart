@@ -18,6 +18,16 @@ import 'package:gostradav1/app/ui/pages/kategori/tagihan/tagihan.dart';
 import 'package:gostradav1/app/ui/pages/kategori/transkrip/transkrip.dart';
 import 'package:gostradav1/app/ui/pages/kategori/upload_bukti_bayar/detail/detailpembayaran.dart';
 import 'package:gostradav1/app/ui/pages/kategori/upload_bukti_bayar/upload_bukti_bayar.dart';
+import 'package:gostradav1/app/ui/pages/library/booking.dart';
+import 'package:gostradav1/app/ui/pages/library/bookmark.dart';
+import 'package:gostradav1/app/ui/pages/library/detailbookv2.dart';
+import 'package:gostradav1/app/ui/pages/library/formpeminjaman.dart';
+import 'package:gostradav1/app/ui/pages/library/historypeminjaman.dart';
+import 'package:gostradav1/app/ui/pages/library/koleksibook.dart';
+import 'package:gostradav1/app/ui/pages/library/kunjungan.dart';
+import 'package:gostradav1/app/ui/pages/library/libraryv2.dart';
+import 'package:gostradav1/app/ui/pages/library/popularbook.dart';
+import 'package:gostradav1/app/ui/pages/library/registrasi.dart';
 import 'package:gostradav1/app/ui/pages/login/login.dart';
 import 'package:gostradav1/app/ui/pages/navigation/bottom_navigation.dart';
 import 'package:gostradav1/app/ui/pages/navigation/dashboard.dart';
@@ -154,6 +164,46 @@ class AppPage {
     GetPage(
       name: RoutName.lihatundagan,
       page: () => LihatUndanganPage(),
-    )
+    ),
+    GetPage(
+      name: RoutName.library,
+      page: () => Libraryv2(),
+    ),
+    GetPage(
+      name: RoutName.historypeminjaman,
+      page: () => HistoryPeminjamanBuku(),
+    ),
+    GetPage(
+      name: RoutName.detailbook,
+      page: () => DetailBuku(),
+    ),
+    GetPage(
+      name: RoutName.popularbook,
+      page: () => PopularBook(),
+    ),
+    GetPage(
+      name: RoutName.koleksibook,
+      page: () => KoleksiBook(),
+    ),
+    GetPage(
+      name: RoutName.bookmark,
+      page: () => Bookmark(),
+    ),
+    GetPage(
+      name: RoutName.peminjaman,
+      page: () => FormPeminjaman(),
+    ),
+    GetPage(
+      name: RoutName.booking,
+      page: () => Booking(),
+    ),
+    GetPage(
+      name: RoutName.kunjungan,
+      page: () => Kunjungan(),
+    ),
+    GetPage(
+      name: RoutName.registrasi,
+      page: () => Registrasi(),
+    ),
   ];
 }
