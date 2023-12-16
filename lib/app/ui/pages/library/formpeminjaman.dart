@@ -57,7 +57,7 @@ class _FormPeminjamanState extends State<FormPeminjaman> {
         backgroundColor: DataColors.white,
         centerTitle: true,
         title: Text(
-          "Form Peminjaman",
+          "Form Booking",
           style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.bold,
@@ -83,22 +83,25 @@ class _FormPeminjamanState extends State<FormPeminjaman> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                         Text(
-                          "Item Code",
+                          "Exemplar",
                           style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.bold,
                               color: DataColors.primary700),
                         ),
+                        SizedBox(
+                          height: 5.sp,
+                        ),
                         CustomDropdownButton2(
                           buttonDecoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(14.sp),
+                              borderRadius: BorderRadius.circular(5.sp),
                               border: Border.all(
                                   color: DataColors.Neutral200, width: 1.5)),
                           buttonWidth: 90.w,
                           buttonHeight: 6.h,
                           buttonPadding: EdgeInsets.all(10.sp),
                           dropdownWidth: 90.w,
-                          hint: 'Pilih Periode',
+                          hint: 'Pilih Exemplar',
                           value: selectedValue,
                           dropdownItems: availableItem
                               .map((String itemCode) => itemCode)
@@ -114,7 +117,7 @@ class _FormPeminjamanState extends State<FormPeminjaman> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Item Code",
+                        "Exemplar",
                         style: TextStyle(
                             fontSize: 12.sp,
                             fontWeight: FontWeight.bold,
@@ -134,11 +137,11 @@ class _FormPeminjamanState extends State<FormPeminjaman> {
                           focusedBorder: OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: DataColors.Neutral100),
-                              borderRadius: BorderRadius.circular(8.sp)),
+                              borderRadius: BorderRadius.circular(5.sp)),
                           enabledBorder: OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: DataColors.Neutral100),
-                              borderRadius: BorderRadius.circular(8.sp)),
+                              borderRadius: BorderRadius.circular(5.sp)),
                           labelStyle: TextStyle(
                               fontSize: 10.sp, fontWeight: FontWeight.normal),
                           isDense: true,
@@ -147,7 +150,7 @@ class _FormPeminjamanState extends State<FormPeminjaman> {
                           border: OutlineInputBorder(
                             // borderSide:
                             //     BorderSide(color: DataColors.Neutral100, width: 1.0),
-                            borderRadius: BorderRadius.circular(8.sp),
+                            borderRadius: BorderRadius.circular(5.sp),
                           ),
                         ),
                       )
@@ -157,133 +160,133 @@ class _FormPeminjamanState extends State<FormPeminjaman> {
               height: 10.sp,
             ),
             Text(
-              "Nama Buku",
+              "*Silahkan pilih eksemplar buku yang akan anda pinjam, jika anda tidak tahu atau lupa dengan eksemplar buku silahkan pilih yang mana saja",
               style: TextStyle(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.bold,
-                  color: DataColors.primary700),
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.w400,
+                  color: DataColors.primary800),
             ),
-            SizedBox(
-              height: 5.sp,
-            ),
-            TextFormField(
-              readOnly: true,
-              autocorrect: false,
-              initialValue: Get.arguments[1],
-              textInputAction: TextInputAction.done,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(10.sp),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: DataColors.Neutral100),
-                    borderRadius: BorderRadius.circular(8.sp)),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: DataColors.Neutral100),
-                    borderRadius: BorderRadius.circular(8.sp)),
-                labelStyle:
-                    TextStyle(fontSize: 10.sp, fontWeight: FontWeight.normal),
-                isDense: true,
-                filled: true,
-                fillColor: DataColors.Neutral100,
-                border: OutlineInputBorder(
-                  // borderSide:
-                  //     BorderSide(color: DataColors.semigrey, width: 1.0),
-                  borderRadius: BorderRadius.circular(8.sp),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10.sp,
-            ),
-            Text(
-              "Tanggal Peminjaman",
-              style: TextStyle(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.bold,
-                  color: DataColors.primary700),
-            ),
-            SizedBox(
-              height: 5.sp,
-            ),
-            TextFormField(
-              focusNode: dateBorrowFocus,
-              readOnly: true,
-              autocorrect: false,
-              controller: dateborrow,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(10.sp),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: DataColors.Neutral100),
-                    borderRadius: BorderRadius.circular(8.sp)),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: DataColors.Neutral100),
-                    borderRadius: BorderRadius.circular(8.sp)),
-                labelStyle:
-                    TextStyle(fontSize: 10.sp, fontWeight: FontWeight.normal),
-                isDense: true,
-                filled: true,
-                fillColor: DataColors.Neutral100,
-                border: OutlineInputBorder(
-                  // borderSide:
-                  //     BorderSide(color: DataColors.Neutral100, width: 1.0),
-                  borderRadius: BorderRadius.circular(8.sp),
-                ),
-              ),
-              textInputAction: TextInputAction.done,
-              // onTap: () async {
-              //   DateTime? picked = await showDatePicker(
-              //     context: context,
-              //     initialDate: DateTime.now(),
-              //     firstDate: DateTime(1900),
-              //     lastDate: DateTime(2100),
-              //   );
-              //   if (picked != null) {
-              //     dateborrow.text =
-              //         DateFormat('dd-MM-yyyy').format(picked).toString();
-              //     DateTime returnDate = picked.add(const Duration(days: 7));
-              //     datereturn.text = DateFormat('dd-MM-yyy').format(returnDate);
-              //     FocusScope.of(context).requestFocus(FocusNode());
-              //   }
-              // },
-            ),
-            SizedBox(
-              height: 10.sp,
-            ),
-            Text(
-              "Tanggal Pengembalian",
-              style: TextStyle(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.bold,
-                  color: DataColors.primary700),
-            ),
-            SizedBox(
-              height: 5.sp,
-            ),
-            TextFormField(
-              readOnly: true,
-              autocorrect: false,
-              controller: datereturn,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(10.sp),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: DataColors.Neutral100),
-                    borderRadius: BorderRadius.circular(8.sp)),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: DataColors.Neutral100),
-                    borderRadius: BorderRadius.circular(8.sp)),
-                labelStyle:
-                    TextStyle(fontSize: 10.sp, fontWeight: FontWeight.normal),
-                isDense: true,
-                filled: true,
-                fillColor: DataColors.Neutral100,
-                border: OutlineInputBorder(
-                  // borderSide:
-                  //     BorderSide(color: DataColors.Neutral100, width: 1.0),
-                  borderRadius: BorderRadius.circular(8.sp),
-                ),
-              ),
-              textInputAction: TextInputAction.done,
-            ),
+            // SizedBox(
+            //   height: 5.sp,
+            // ),
+            // TextFormField(
+            //   readOnly: true,
+            //   autocorrect: false,
+            //   initialValue: Get.arguments[1],
+            //   textInputAction: TextInputAction.done,
+            //   keyboardType: TextInputType.text,
+            //   decoration: InputDecoration(
+            //     contentPadding: EdgeInsets.all(10.sp),
+            //     focusedBorder: OutlineInputBorder(
+            //         borderSide: BorderSide(color: DataColors.Neutral100),
+            //         borderRadius: BorderRadius.circular(8.sp)),
+            //     enabledBorder: OutlineInputBorder(
+            //         borderSide: BorderSide(color: DataColors.Neutral100),
+            //         borderRadius: BorderRadius.circular(8.sp)),
+            //     labelStyle:
+            //         TextStyle(fontSize: 10.sp, fontWeight: FontWeight.normal),
+            //     isDense: true,
+            //     filled: true,
+            //     fillColor: DataColors.Neutral100,
+            //     border: OutlineInputBorder(
+            //       // borderSide:
+            //       //     BorderSide(color: DataColors.semigrey, width: 1.0),
+            //       borderRadius: BorderRadius.circular(8.sp),
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: 10.sp,
+            // ),
+            // Text(
+            //   "Tanggal Peminjaman",
+            //   style: TextStyle(
+            //       fontSize: 12.sp,
+            //       fontWeight: FontWeight.bold,
+            //       color: DataColors.primary700),
+            // ),
+            // SizedBox(
+            //   height: 5.sp,
+            // ),
+            // TextFormField(
+            //   focusNode: dateBorrowFocus,
+            //   readOnly: true,
+            //   autocorrect: false,
+            //   controller: dateborrow,
+            //   decoration: InputDecoration(
+            //     contentPadding: EdgeInsets.all(10.sp),
+            //     focusedBorder: OutlineInputBorder(
+            //         borderSide: BorderSide(color: DataColors.Neutral100),
+            //         borderRadius: BorderRadius.circular(8.sp)),
+            //     enabledBorder: OutlineInputBorder(
+            //         borderSide: BorderSide(color: DataColors.Neutral100),
+            //         borderRadius: BorderRadius.circular(8.sp)),
+            //     labelStyle:
+            //         TextStyle(fontSize: 10.sp, fontWeight: FontWeight.normal),
+            //     isDense: true,
+            //     filled: true,
+            //     fillColor: DataColors.Neutral100,
+            //     border: OutlineInputBorder(
+            //       // borderSide:
+            //       //     BorderSide(color: DataColors.Neutral100, width: 1.0),
+            //       borderRadius: BorderRadius.circular(8.sp),
+            //     ),
+            //   ),
+            //   textInputAction: TextInputAction.done,
+            //   // onTap: () async {
+            //   //   DateTime? picked = await showDatePicker(
+            //   //     context: context,
+            //   //     initialDate: DateTime.now(),
+            //   //     firstDate: DateTime(1900),
+            //   //     lastDate: DateTime(2100),
+            //   //   );
+            //   //   if (picked != null) {
+            //   //     dateborrow.text =
+            //   //         DateFormat('dd-MM-yyyy').format(picked).toString();
+            //   //     DateTime returnDate = picked.add(const Duration(days: 7));
+            //   //     datereturn.text = DateFormat('dd-MM-yyy').format(returnDate);
+            //   //     FocusScope.of(context).requestFocus(FocusNode());
+            //   //   }
+            //   // },
+            // ),
+            // SizedBox(
+            //   height: 10.sp,
+            // ),
+            // Text(
+            //   "Tanggal Pengembalian",
+            //   style: TextStyle(
+            //       fontSize: 12.sp,
+            //       fontWeight: FontWeight.bold,
+            //       color: DataColors.primary700),
+            // ),
+            // SizedBox(
+            //   height: 5.sp,
+            // ),
+            // TextFormField(
+            //   readOnly: true,
+            //   autocorrect: false,
+            //   controller: datereturn,
+            //   decoration: InputDecoration(
+            //     contentPadding: EdgeInsets.all(10.sp),
+            //     focusedBorder: OutlineInputBorder(
+            //         borderSide: BorderSide(color: DataColors.Neutral100),
+            //         borderRadius: BorderRadius.circular(8.sp)),
+            //     enabledBorder: OutlineInputBorder(
+            //         borderSide: BorderSide(color: DataColors.Neutral100),
+            //         borderRadius: BorderRadius.circular(8.sp)),
+            //     labelStyle:
+            //         TextStyle(fontSize: 10.sp, fontWeight: FontWeight.normal),
+            //     isDense: true,
+            //     filled: true,
+            //     fillColor: DataColors.Neutral100,
+            //     border: OutlineInputBorder(
+            //       // borderSide:
+            //       //     BorderSide(color: DataColors.Neutral100, width: 1.0),
+            //       borderRadius: BorderRadius.circular(8.sp),
+            //     ),
+            //   ),
+            //   textInputAction: TextInputAction.done,
+            // ),
           ],
         ),
       ),
@@ -292,21 +295,19 @@ class _FormPeminjamanState extends State<FormPeminjaman> {
         margin: EdgeInsets.only(bottom: 10.sp, top: 2.sp),
         child: ElevatedButton(
             onPressed: () {
-              DateTime tanggalPinjam =
-                  DateFormat('dd-MM-yyyy').parse(dateborrow.text);
-              DateTime tanggalKembali =
-                  DateFormat('dd-MM-yyyy').parse(datereturn.text);
-              String tanggalpinjam =
-                  DateFormat('yyyy-MM-dd').format(tanggalPinjam);
-              String tanggalkembali =
-                  DateFormat('yyyy-MM-dd').format(tanggalKembali);
+              // DateTime tanggalPinjam =
+              //     DateFormat('dd-MM-yyyy').parse(dateborrow.text);
+              // DateTime tanggalKembali =
+              //     DateFormat('dd-MM-yyyy').parse(datereturn.text);
+              // String tanggalpinjam =
+              //     DateFormat('yyyy-MM-dd').format(tanggalPinjam);
+              // String tanggalkembali =
+              //     DateFormat('yyyy-MM-dd').format(tanggalKembali);
 
               if (isDropdown) {
-                lc.addloan(selectedValue.toString(), data['nim'], tanggalpinjam,
-                    tanggalkembali);
+                lc.addqueue(dataku[1], data['nim'], selectedValue.toString());
               } else {
-                lc.addloan(itemcodeku.text, data['nim'], tanggalpinjam,
-                    tanggalkembali);
+                lc.addqueue(dataku[1], data['nim'], itemcodeku.text);
               }
             },
             style: ElevatedButton.styleFrom(

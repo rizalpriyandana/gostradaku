@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, deprecated_member_use
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -45,7 +47,8 @@ class _Libraryv2State extends State<Libraryv2> {
               child: LoadingAnimationWidget.fourRotatingDots(
                   color: DataColors.primary700, size: 40.sp)),
         );
-      } else if (lc.listbook.isNotEmpty && lc.notmember == "Anda Sudah Terdaftar Sebagai Member") {
+      } else if (lc.listbook.isNotEmpty &&
+          lc.notmember == "Anda Sudah Terdaftar Sebagai Member") {
         return Scaffold(
           resizeToAvoidBottomInset: false,
           floatingActionButton: SpeedDial(
@@ -53,36 +56,36 @@ class _Libraryv2State extends State<Libraryv2> {
             icon: Icons.more_horiz_outlined,
             backgroundColor: DataColors.primary600,
             children: [
+              // SpeedDialChild(
+              //   child: Padding(
+              //     padding: EdgeInsets.all(8.sp),
+              //     child: Image.asset(
+              //       "assets/icon/qr-code.png",
+              //       height: 15.sp,
+              //       width: 15.sp,
+              //       color: DataColors.primary700,
+              //     ),
+              //   ),
+              //   onTap: () {
+              //     lc.openUrl("https://lib.strada.ac.id/index.php?p=visitor");
+              //   },
+              //   label: "Kunjungan",
+              //   labelStyle: TextStyle(
+              //       color: DataColors.primary, fontWeight: FontWeight.w600),
+              // ),
               SpeedDialChild(
-                  child: Padding(
-                    padding: EdgeInsets.all(8.sp),
-                    child: Image.asset(
-                      "assets/icon/qr-code.png",
-                      height: 15.sp,
-                      width: 15.sp,
-                      color: DataColors.primary700,
-                    ),
-                  ),
-                  onTap: () {
-                    Get.toNamed(RoutName.kunjungan);
-                  },
-                  label: "Kunjungan",
-                  labelStyle: TextStyle(
-                      color: DataColors.primary, fontWeight: FontWeight.w600),
+                child: FaIcon(
+                  FontAwesomeIcons.history,
+                  color: DataColors.primary700,
+                  size: 15.sp,
                 ),
-                SpeedDialChild(
-                  child: FaIcon(
-                    FontAwesomeIcons.history,
-                    color: DataColors.primary700,
-                    size: 15.sp,
-                  ),
-                  onTap: () {
-                    Get.toNamed(RoutName.booking);
-                  },
-                  label: "Booking",
-                  labelStyle: TextStyle(
-                      color: DataColors.primary, fontWeight: FontWeight.w600),
-                ),
+                onTap: () {
+                  Get.toNamed(RoutName.booking);
+                },
+                label: "Booking",
+                labelStyle: TextStyle(
+                    color: DataColors.primary, fontWeight: FontWeight.w600),
+              ),
               SpeedDialChild(
                 child: FaIcon(
                   FontAwesomeIcons.history,
@@ -186,8 +189,8 @@ class _Libraryv2State extends State<Libraryv2> {
                                                 fontWeight: FontWeight.w500,
                                                 color: DataColors.primary800),
                                             decoration: InputDecoration(
-                                              contentPadding:
-                                                  EdgeInsets.only(bottom: 25.sp),
+                                              contentPadding: EdgeInsets.only(
+                                                  bottom: 25.sp),
                                               hintText: "Cari....",
                                               hintStyle: TextStyle(
                                                   color: DataColors.primary400,
@@ -226,7 +229,8 @@ class _Libraryv2State extends State<Libraryv2> {
                                                               lc.filteredResults
                                                                   .clear();
                                                               lc.showSearchResults
-                                                                  .value = false;
+                                                                      .value =
+                                                                  false;
                                                               lc.searchKeywoard
                                                                   .value = '';
                                                             },
@@ -250,7 +254,7 @@ class _Libraryv2State extends State<Libraryv2> {
                                                         // lc.selectedYears.clear();
                                                         // lc.showSearchResults.value = false;
                                                         showModalBottomSheet(
-                  
+
                                                             // isScrollControlled: true,
                                                             // enableDrag: true,
                                                             shape: RoundedRectangleBorder(
@@ -262,8 +266,9 @@ class _Libraryv2State extends State<Libraryv2> {
                                                                         .circular(15
                                                                             .sp))),
                                                             context: context,
-                                                            builder: (context) =>
-                                                                Filter());
+                                                            builder:
+                                                                (context) =>
+                                                                    Filter());
                                                       },
                                                       child: Container(
                                                         height: 30.sp,
@@ -276,8 +281,9 @@ class _Libraryv2State extends State<Libraryv2> {
                                                             color: DataColors
                                                                 .primary600),
                                                         child: Padding(
-                                                          padding: EdgeInsets.all(
-                                                              6.sp),
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  6.sp),
                                                           child: Image.asset(
                                                             "assets/icon/filter.png",
                                                             height: 25.sp,
@@ -297,13 +303,14 @@ class _Libraryv2State extends State<Libraryv2> {
                                                   color: DataColors.primary700,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(10.sp),
+                                                    BorderRadius.circular(
+                                                        10.sp),
                                               ),
                                               fillColor: DataColors.white,
                                               enabledBorder: OutlineInputBorder(
                                                   borderSide: BorderSide(
-                                                      color:
-                                                          DataColors.primary800),
+                                                      color: DataColors
+                                                          .primary800),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           10.sp)),
@@ -447,7 +454,7 @@ class _Libraryv2State extends State<Libraryv2> {
                                                 i++) {
                                               String itemCodelist = itemCode[i];
                                               String status = statusList[i];
-                  
+
                                               if (status == "Available") {
                                                 stok++;
                                               }
@@ -471,7 +478,7 @@ class _Libraryv2State extends State<Libraryv2> {
                                                   buku.data[0].collation,
                                                   buku.data[0].language,
                                                   buku.data[0].edition,
-                                                  buku.data[0].total.toString(),
+                                                  buku.data[0].total,
                                                   buku.data[0].topic,
                                                   buku.data[0].biblioId,
                                                   buku.data[0].bookmarkStatus,
@@ -508,430 +515,84 @@ class _Libraryv2State extends State<Libraryv2> {
             ),
           ),
         );
-      } else{
+      } else {
         return Scaffold(
-          resizeToAvoidBottomInset: false,
-          floatingActionButton: SpeedDial(
-            activeIcon: Icons.close,
-            icon: Icons.more_horiz_outlined,
-            backgroundColor: DataColors.primary600,
-            children: [
-              SpeedDialChild(
+            resizeToAvoidBottomInset: false,
+            body: SafeArea(
+              child: RefreshIndicator(
+                onRefresh: () => lc.allbook(data['nim']),
+                child: SingleChildScrollView(
                   child: Padding(
-                    padding: EdgeInsets.all(8.sp),
-                    child: Image.asset(
-                      "assets/icon/account.png",
-                      height: 15.sp,
-                      width: 15.sp,
-                      color: DataColors.primary700,
-                    ),
-                  ),
-                  onTap: () {
-                    Get.toNamed(RoutName.registrasi);
-                  },
-                  label: "Registrasi",
-                  labelStyle: TextStyle(
-                      color: DataColors.primary, fontWeight: FontWeight.w600),
-                ),
-            ],
-          ),
-          // backgroundColor: DataColors.greywhite,
-          body: RefreshIndicator(
-            onRefresh: () => lc.allbook(data['nim']),
-            child: SafeArea(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 15.sp),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Stack(
+                    padding: EdgeInsets.only(bottom: 15.sp),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 250.sp),
+                          child: Column(
                             children: [
-                              Container(
-                                width: double.infinity,
-                                height: 200.sp,
-                                decoration:
-                                    BoxDecoration(color: DataColors.primary100),
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 62.sp, left: 105.sp),
-                                      child: Container(
-                                        padding: EdgeInsets.all(0.sp),
-                                        height: 110.sp,
-                                        // width: 100.sp,
-                                        child: Image.asset(
-                                          'assets/images/backgroundlibrary.png',
-                                          // height: 110.sp,
-                                          // width: 400.sp,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          20.sp, 5.sp, 20.sp, 0.sp),
-                                      child: SizedBox(
-                                        height: 52.sp,
-                                        width: double.infinity,
-                                        child: Obx(
-                                          () => TextFormField(
-                                            controller: lc.sc,
-                                            onChanged: (keyword) {
-                                              lc.searchKeywoard.value = keyword;
-                                            },
-                                            onFieldSubmitted: (keyword) {
-                                              if (keyword.isEmpty) {
-                                                lc.showSearchResults.value =
-                                                    false;
-                                                // Get.snackbar("hi", "aaa");
-                                                setState(() {
-                                                  vis = true;
-                                                });
-                                              } else if (keyword.isNotEmpty) {
-                                                lc.searchbykey(keyword);
-                                                // Get.snackbar("hi", "ss");
-                                                // lc.searchBooks(
-                                                //   keyword, lc.selectedTopics, lc.selectedYears);
-                                                lc.keywordku = keyword;
-                                              }
-                                            },
-                                            style: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.w500,
-                                                color: DataColors.primary800),
-                                            decoration: InputDecoration(
-                                              contentPadding:
-                                                  EdgeInsets.only(bottom: 25.sp),
-                                              hintText: "Cari....",
-                                              hintStyle: TextStyle(
-                                                  color: DataColors.primary400,
-                                                  fontSize: 12.sp,
-                                                  fontWeight: FontWeight.w100),
-                                              prefixIcon: Padding(
-                                                padding: EdgeInsets.only(
-                                                    left: 8.sp,
-                                                    right: 5.sp,
-                                                    top: 8.sp,
-                                                    bottom: 8.sp),
-                                                child: Image.asset(
-                                                  "assets/icon/search.png",
-                                                  height: 20.sp,
-                                                  width: 20.sp,
-                                                  color: DataColors.primary800,
-                                                ),
-                                              ),
-                                              suffixIcon: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  lc.searchKeywoard.isEmpty
-                                                      ? SizedBox.shrink()
-                                                      : Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  left: 8.sp,
-                                                                  right: 0.sp,
-                                                                  top: 8.sp,
-                                                                  bottom: 8.sp),
-                                                          child: InkWell(
-                                                            onTap: () {
-                                                              lc.sc.clear();
-                                                              lc.searchResults
-                                                                  .clear();
-                                                              lc.filteredResults
-                                                                  .clear();
-                                                              lc.showSearchResults
-                                                                  .value = false;
-                                                              lc.searchKeywoard
-                                                                  .value = '';
-                                                            },
-                                                            child: Icon(
-                                                              Icons.close,
-                                                              size: 15.sp,
-                                                              color: DataColors
-                                                                  .primary800,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                  Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 8.sp,
-                                                        right: 8.sp,
-                                                        top: 8.sp,
-                                                        bottom: 8.sp),
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        // lc.selectedTopics.clear();
-                                                        // lc.selectedYears.clear();
-                                                        // lc.showSearchResults.value = false;
-                                                        showModalBottomSheet(
-          
-                                                            // isScrollControlled: true,
-                                                            // enableDrag: true,
-                                                            shape: RoundedRectangleBorder(
-                                                                borderRadius: BorderRadius.only(
-                                                                    topLeft: Radius
-                                                                        .circular(15
-                                                                            .sp),
-                                                                    topRight: Radius
-                                                                        .circular(15
-                                                                            .sp))),
-                                                            context: context,
-                                                            builder: (context) =>
-                                                                Filter());
-                                                      },
-                                                      child: Container(
-                                                        height: 30.sp,
-                                                        width: 30.sp,
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8.sp),
-                                                            color: DataColors
-                                                                .primary600),
-                                                        child: Padding(
-                                                          padding: EdgeInsets.all(
-                                                              6.sp),
-                                                          child: Image.asset(
-                                                            "assets/icon/filter.png",
-                                                            height: 25.sp,
-                                                            width: 25.sp,
-                                                            color: DataColors
-                                                                .primary100,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              filled: true,
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: DataColors.primary700,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(10.sp),
-                                              ),
-                                              fillColor: DataColors.white,
-                                              enabledBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          DataColors.primary800),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.sp)),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              Center(child: GestureDetector(onTap: () => lc.allbook(data['nim']),child: Icon(Icons.refresh, size: 20.sp,))),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    10.sp, 10.sp, 0.sp, 0.sp),
-                                child: Text(
-                                  'STRADA LIBRARY',
+                                padding:  EdgeInsets.only(top: 10.sp),
+                                child: Center(
+                                    child: Text(
+                                  "Anda Belum Terdaftar Sebagai Member, Silahkan Registrasi telebih dahulu",
                                   style: TextStyle(
-                                    color: DataColors.primary800,
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    10.sp, 40.sp, 80.sp, 0.sp),
-                                child: Text(
-                                  '\"Carilah buku yang Anda suka. Tulislah sebagaimana Anda ingin membaca buku yang disuka.\" - Dewi Lestari',
-                                  style: TextStyle(
-                                      color: DataColors.primary800,
-                                      fontSize: 10.sp,
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w500
-                                      // height: 1.5
-                                      ),
-                                ),
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: DataColors.black),
+                                  textAlign: TextAlign.center,
+                                )),
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                      // Obx(
-                      //   () {
-                      //     if (lc.showSearchResults.value) {
-                      //       return Padding(
-                      //         padding: EdgeInsets.only(top: 15.sp, right: 10.sp),
-                      //         child: GridView.builder(
-                      //           shrinkWrap: true,
-                      //           gridDelegate:
-                      //               SliverGridDelegateWithFixedCrossAxisCount(
-                      //                   crossAxisCount: 2, childAspectRatio: 0.525),
-                      //           scrollDirection: Axis.vertical,
-                      //           physics: NeverScrollableScrollPhysics(),
-                      //           itemCount: lc.searchResults.length,
-                      //           itemBuilder: (context, index) {
-                      //             var buku = lc.searchResults[index];
-                      //             return GestureDetector(
-                      //               onTap: () {
-                      //                 Get.snackbar("Strada Library",
-                      //                     "Ini adalah ${lc.listbuku[index].title}");
-                      //               },
-                      //               child: ContentSearch(
-                      //                 gambar: buku.gambar,
-                      //                 title: buku.title,
-                      //                 penulis: buku.penulis,
-                      //                 copies: buku.copies,
-                      //               ),
-                      //             );
-                      //           },
-                      //         ),
-                      //       );
-                      //     } else {
-                      //       return ContentUtama(lc: lc);
-                      //     }
-                      //   },
-                      // ),
-                      Obx(
-                        () {
-                          if (lc.showSearchResults.value) {
-                            if (lc.searchResults.isEmpty) {
-                              // Tampilkan Lottie file jika tidak ada hasil pencarian
-                              return Padding(
-                                padding: EdgeInsets.only(top: 50.sp),
+                        ),
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: GestureDetector(
+                              onTap: () {
+                                lc.register(
+                                    data['name'],
+                                    "0000-00-00",
+                                    data['nim'],
+                                    "L",
+                                    "Jalan",
+                                    "0215469874",
+                                    "test@gmail.com",
+                                    data['nim']);
+                              },
+                              child: Container(
+                                height: 35.sp,
+                                width: 100.sp,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.sp),
+                                    color: DataColors.primary800),
                                 child: Center(
-                                  child: Lottie.asset(
-                                    'assets/icon/nodata.json',
-                                    width: 180.sp,
-                                    height: 180.sp,
-                                    // fit: BoxFit.contain,
-                                  ),
-                                ),
-                              );
-                            } else {
-                              // Tampilkan hasil pencarian
-                              return Padding(
-                                padding:
-                                    EdgeInsets.only(top: 15.sp, right: 10.sp),
-                                child: Column(
-                                  // crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: InkWell(
-                                        onTap: () {
-                                          lc.showSearchResults.value = false;
-                                        },
-                                        child: Icon(
-                                          Icons.close,
-                                          size: 15.sp,
-                                          color: DataColors.primary800,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    GridView.builder(
-                                      shrinkWrap: true,
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              childAspectRatio: 0.525),
-                                      scrollDirection: Axis.vertical,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemCount: lc.searchResults.length,
-                                      itemBuilder: (context, index) {
-                                        var buku = lc.searchResults[index];
-                                        var statusData = buku.data[0].status;
-                                        var itemData = buku.data[0].itemCode;
-                                        List<String> statusList = [];
-                                        int stok = 0;
-                                        List<String> itemCode = [];
-                                        if (statusData.contains(', ') &&
-                                            itemData!.contains(', ')) {
-                                          statusList = statusData.split(', ');
-                                          itemCode = itemData.split(', ');
-                                          if (statusList.length ==
-                                              itemCode.length) {
-                                            for (int i = 0;
-                                                i < statusList.length;
-                                                i++) {
-                                              String itemCodelist = itemCode[i];
-                                              String status = statusList[i];
-          
-                                              if (status == "Available") {
-                                                stok++;
-                                              }
-                                            }
-                                          } else {}
-                                        } else {
-                                          if (statusData == "Available") {
-                                            stok++;
-                                          }
-                                        }
-                                        return GestureDetector(
-                                          onTap: () {
-                                            Get.toNamed(RoutName.detailbook,
-                                                arguments: [
-                                                  buku.data[0].image,
-                                                  buku.data[0].title,
-                                                  buku.data[0].authorname,
-                                                  buku.data[0].notes,
-                                                  buku.data[0].publisher,
-                                                  buku.data[0].isbnIssn,
-                                                  buku.data[0].collation,
-                                                  buku.data[0].language,
-                                                  buku.data[0].edition,
-                                                  buku.data[0].total.toString(),
-                                                  buku.data[0].topic,
-                                                  buku.data[0].biblioId,
-                                                  buku.data[0].bookmarkStatus,
-                                                  buku.data[0].itemCode,
-                                                  buku.data[0].status,
-                                                  buku.data[0].location,
-                                                  buku.data[0].duedate
-                                                ]);
-                                          },
-                                          child: ContentSearch(
-                                            gambar: buku.data[0].image,
-                                            title: buku.data[0].title,
-                                            penulis:
-                                                buku.data[0].authorname ?? "",
-                                            copies: stok.toString(),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }
-                          } else {
-                            // Tampilkan daftar buku awal
-                            return ContentUtama2(lc: lc);
-                          }
-                        },
-                      ),
-                    ],
+                                    child: Obx(() => lc.loadingregister.isTrue
+                                        ? SizedBox(
+                                            height: 20,
+                                            width: 20,
+                                            child: CircularProgressIndicator(
+                                                color: DataColors.white,
+                                                strokeWidth: 2.0),
+                                          )
+                                        : Text(
+                                            "Registrasi",
+                                            style: TextStyle(
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.bold,
+                                                color: DataColors.white),
+                                          ))),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-        );
+            ));
       }
     });
   }
@@ -1356,7 +1017,7 @@ class ContentUtama extends StatelessWidget {
                     datalist.data[0].collation,
                     datalist.data[0].language,
                     datalist.data[0].edition,
-                    datalist.data[0].total.toString(),
+                    datalist.data[0].total,
                     datalist.data[0].topic,
                     datalist.data[0].biblioId,
                     datalist.data[0].bookmarkStatus,
@@ -1471,7 +1132,7 @@ class ContentUtama extends StatelessWidget {
                     datalist.data[0].collation,
                     datalist.data[0].language,
                     datalist.data[0].edition,
-                    datalist.data[0].total.toString(),
+                    datalist.data[0].total,
                     datalist.data[0].topic,
                     datalist.data[0].biblioId,
                     datalist.data[0].bookmarkStatus,
@@ -1495,6 +1156,7 @@ class ContentUtama extends StatelessWidget {
     );
   }
 }
+
 class ContentUtama2 extends StatelessWidget {
   const ContentUtama2({
     Key? key,
@@ -1606,7 +1268,7 @@ class ContentUtama2 extends StatelessWidget {
                     datalist.data[0].collation,
                     datalist.data[0].language,
                     datalist.data[0].edition,
-                    datalist.data[0].total.toString(),
+                    datalist.data[0].total,
                     datalist.data[0].topic,
                     datalist.data[0].biblioId,
                     datalist.data[0].bookmarkStatus,
@@ -1721,7 +1383,7 @@ class ContentUtama2 extends StatelessWidget {
                     datalist.data[0].collation,
                     datalist.data[0].language,
                     datalist.data[0].edition,
-                    datalist.data[0].total.toString(),
+                    datalist.data[0].total,
                     datalist.data[0].topic,
                     datalist.data[0].biblioId,
                     datalist.data[0].bookmarkStatus,

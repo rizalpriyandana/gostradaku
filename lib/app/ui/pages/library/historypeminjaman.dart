@@ -1,7 +1,6 @@
-// ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, must_be_immutable
+// ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, must_be_immutable, avoid_unnecessary_containers, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gostradav1/app/data/models/library/library_m.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -24,6 +23,8 @@ class _HistoryPeminjamanBukuState extends State<HistoryPeminjamanBuku>
   LibraryController lc = Get.find<LibraryController>();
   final box = GetStorage();
   var isLoading = true.obs;
+  String tokenapi =
+      "MUp6bENqTzlzYVZaM0xKd2FkbnY5WkFzbEZQVFdSQTZ1QUdaY3grUnZvND0=";
   late Map data = box.read("dataUser") as Map<String, dynamic>;
   RxList<CurrentLoanModel> listcurrent = <CurrentLoanModel>[].obs;
   RxList<HistoryLoanModel> listhistory = <HistoryLoanModel>[].obs;
@@ -269,24 +270,26 @@ class _HistoryPeminjamanBukuState extends State<HistoryPeminjamanBuku>
                               ),
                             ),
                           ),
-                          Obx(() =>  Padding(
-                            padding: EdgeInsets.only(left: 5.sp, top: 10.sp),
-                            child: ListView.builder(
-                              itemCount: listhistory.length,
-                              itemBuilder: (context, index) {
-                                // final datalistloan = listhistory[index];
-                                return 
-                                LoanHistory(
-                                    itemCode:
-                                        listhistory[index].data[0].itemCode,
-                                    title: listhistory[index].data[0].title,
-                                    loandate:
-                                        listhistory[index].data[0].loanDate,
-                                    returndate:
-                                        listhistory[index].data[0].returnDate);
-                              },
+                          Obx(
+                            () => Padding(
+                              padding: EdgeInsets.only(left: 5.sp, top: 10.sp),
+                              child: ListView.builder(
+                                itemCount: listhistory.length,
+                                itemBuilder: (context, index) {
+                                  // final datalistloan = listhistory[index];
+                                  return LoanHistory(
+                                      itemCode:
+                                          listhistory[index].data[0].itemCode ?? "",
+                                      title: listhistory[index].data[0].title ?? "",
+                                      loandate:
+                                          listhistory[index].data[0].loanDate,
+                                      returndate: listhistory[index]
+                                          .data[0]
+                                          .returnDate);
+                                },
+                              ),
                             ),
-                          ),)
+                          )
                         ],
                       ))
                     ],
@@ -341,15 +344,15 @@ class _HistoryPeminjamanBukuState extends State<HistoryPeminjamanBuku>
                                   title: listcurrent[index].data[0].title,
                                   loandate: listcurrent[index].data[0].loanDate,
                                   duedate: listcurrent[index].data[0].dueDate,
-                                  onTapReturn: () {
-                                    Get.defaultDialog(
-                                        onConfirm: () => returned(
-                                            listcurrent[index].data[0].itemCode,
-                                            data['nim']),
-                                        onCancel: () => dispose(),
-                                        middleText:
-                                            "Apakah anda ingin mengebalikan Buku ini");
-                                  },
+                                  // onTapReturn: () {
+                                  //   Get.defaultDialog(
+                                  //       onConfirm: () => returned(
+                                  //           listcurrent[index].data[0].itemCode,
+                                  //           data['nim']),
+                                  //       onCancel: () => dispose(),
+                                  //       middleText:
+                                  //           "Apakah anda ingin mengebalikan Buku ini");
+                                  // },
                                 );
                               },
                             ),
@@ -430,38 +433,39 @@ class _HistoryPeminjamanBukuState extends State<HistoryPeminjamanBuku>
                                   title: listcurrent[index].data[0].title,
                                   loandate: listcurrent[index].data[0].loanDate,
                                   duedate: listcurrent[index].data[0].dueDate,
-                                  onTapReturn: () {
-                                    Get.defaultDialog(
-                                        onConfirm: () => returned(
-                                            listcurrent[index].data[0].itemCode,
-                                            data['nim']),
-                                        onCancel: () => dispose(),
-                                        middleText:
-                                            "Apakah anda ingin mengebalikan Buku ini");
-                                  },
+                                  // onTapReturn: () {
+                                  //   Get.defaultDialog(
+                                  //       onConfirm: () => returned(
+                                  //           listcurrent[index].data[0].itemCode,
+                                  //           data['nim']),
+                                  //       onCancel: () => dispose(),
+                                  //       middleText:
+                                  //           "Apakah anda ingin mengebalikan Buku ini");
+                                  // },
                                 );
                               },
                             ),
                           ),
-                          Obx(() =>  Padding(
-                            padding: EdgeInsets.only(left: 5.sp, top: 10.sp),
-                            child: ListView.builder(
-                              itemCount: listhistory.length,
-                              itemBuilder: (context, index) {
-                                // final datalistloan = listhistory[index];
-                                return 
-                                LoanHistory(
-                                    itemCode:
-                                        listhistory[index].data[0].itemCode,
-                                    title: listhistory[index].data[0].title,
-                                    loandate:
-                                        listhistory[index].data[0].loanDate,
-                                    returndate:
-                                        listhistory[index].data[0].returnDate);
-                              },
+                          Obx(
+                            () => Padding(
+                              padding: EdgeInsets.only(left: 5.sp, top: 10.sp),
+                              child: ListView.builder(
+                                itemCount: listhistory.length,
+                                itemBuilder: (context, index) {
+                                  // final datalistloan = listhistory[index];
+                                  return LoanHistory(
+                                      itemCode:
+                                          listhistory[index].data[0].itemCode ?? "",
+                                      title: listhistory[index].data[0].title ?? "",
+                                      loandate:
+                                          listhistory[index].data[0].loanDate,
+                                      returndate: listhistory[index]
+                                          .data[0]
+                                          .returnDate);
+                                },
+                              ),
                             ),
-                          ),)
-                          
+                          )
                         ],
                       ))
                     ],
@@ -476,11 +480,11 @@ class _HistoryPeminjamanBukuState extends State<HistoryPeminjamanBuku>
   historyloan(String memberId) async {
     final Map<String, dynamic> databody = {
       Library.memberId: memberId,
+      Library.token: tokenapi
     };
 
     var response = await http.post(
-        Uri.parse(
-            "https://lib.strada.ac.id/index.php?p=api/loan/historyloan"),
+        Uri.parse("https://api-lib.strada.ac.id/public_api/loan/historyloan"),
         body: databody);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
@@ -489,7 +493,7 @@ class _HistoryPeminjamanBukuState extends State<HistoryPeminjamanBuku>
         return null;
       } else {
         var result = HistoryLoanModel.fromJson(data);
-        
+
         listhistory.value = result.data
             .map((data) => HistoryLoanModel(error: false, data: [data]))
             .toList();
@@ -503,11 +507,11 @@ class _HistoryPeminjamanBukuState extends State<HistoryPeminjamanBuku>
   currentloan(String memberId) async {
     final Map<String, dynamic> databody = {
       Library.memberId: memberId,
+      Library.token: tokenapi
     };
 
     var response = await http.post(
-        Uri.parse(
-            "https://lib.strada.ac.id/index.php?p=api/loan/currentloan"),
+        Uri.parse("https://api-lib.strada.ac.id/public_api/loan/currentloan"),
         body: databody);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
@@ -557,16 +561,14 @@ class CurrentLoan extends StatelessWidget {
   String title;
   final DateTime loandate;
   final DateTime duedate;
-  final VoidCallback onTapReturn;
 
-  CurrentLoan(
-      {Key? key,
-      required this.itemCode,
-      required this.title,
-      required this.loandate,
-      required this.duedate,
-      required this.onTapReturn})
-      : super(key: key);
+  CurrentLoan({
+    Key? key,
+    required this.itemCode,
+    required this.title,
+    required this.loandate,
+    required this.duedate,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -576,8 +578,8 @@ class CurrentLoan extends StatelessWidget {
         width: double.infinity,
         height: 90.sp,
         decoration: BoxDecoration(
-          color: Color(0xFFDDE9FA),
-          boxShadow: [
+          color: const Color(0xFFDDE9FA),
+          boxShadow: const [
             BoxShadow(
               blurRadius: 4,
               color: Color(0x33000000),
@@ -594,7 +596,7 @@ class CurrentLoan extends StatelessWidget {
               width: 55.sp,
               height: 20.sp,
               decoration: BoxDecoration(
-                color: Color(0xFF1A2A64),
+                color: const Color(0xFF1A2A64),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(0.sp),
                   bottomRight: Radius.circular(10.sp),
@@ -689,18 +691,18 @@ class CurrentLoan extends StatelessWidget {
                     ),
                   ],
                 ),
-                Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(0.sp, 0.sp, 2.sp, 10.sp),
-                  child: GestureDetector(
-                    onTap: onTapReturn,
-                    child: FaIcon(
-                      FontAwesomeIcons.reply,
-                      color: DataColors.primary800,
-                      size: 18.sp,
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding:
+                //       EdgeInsetsDirectional.fromSTEB(0.sp, 0.sp, 2.sp, 10.sp),
+                //   child: GestureDetector(
+                //     onTap: onTapReturn,
+                //     child: FaIcon(
+                //       FontAwesomeIcons.reply,
+                //       color: DataColors.primary800,
+                //       size: 18.sp,
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ],

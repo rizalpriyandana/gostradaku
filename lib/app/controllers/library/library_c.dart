@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:gostradav1/app/data/models/library/library_m.dart';
 import 'package:gostradav1/app/routes/rout_name.dart';
-import 'package:gostradav1/app/ui/theme/color.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher_string.dart';
 
 class LibraryController extends GetxController {
   RxBool showSearchResults = false.obs;
@@ -20,9 +20,14 @@ class LibraryController extends GetxController {
   var filteredTopics = <String>{};
   final box = GetStorage();
   var isLoading = false.obs;
+  var isRegister = false.obs;
+  var loadingregister = false.obs;
   List<String> topics = [];
   String keywordku = "";
+  RxString exemplar = RxString("");
   String notmember = "";
+  String tokenapi =
+      "MUp6bENqTzlzYVZaM0xKd2FkbnY5WkFzbEZQVFdSQTZ1QUdaY3grUnZvND0=";
 
   RxBool loadingdata = false.obs;
   late Map data = box.read("dataUser") as Map<String, dynamic>;
@@ -151,40 +156,43 @@ class LibraryController extends GetxController {
   }
 
   allbook(String memberId) async {
-    isLoading.value = true;
     final Map<String, dynamic> databody = {
       Library.memberId: memberId,
+      Library.token: tokenapi
     };
+    isLoading.value = true;
     var response = await http.post(
-        Uri.parse("https://lib.strada.ac.id/index.php?p=api/biblio/allbook"),
+        Uri.parse("https://api-lib.strada.ac.id/public_api/biblio/allbook"),
         body: databody);
     if (response.statusCode == 200) {
       var databody = jsonDecode(response.body);
       if (databody['error'] == true) {
-        var result = AllBookModel2.fromJson(databody);
-        var fetchedTopics = result.data
-            .map((datum) => datum.topic.toString())
-            .expand((topics) => topics.split(', '))
-            .where((topic) => topic != "null") // Hanya topik yang bukan "null".
-            .toSet()
-            .toList();
-        topics = fetchedTopics;
-        selectedFilters = List.generate(topics.length, (index) => false);
-        selectedYear = List.generate(years.length, (index) => false);
-
-        listbook2.value = result.data
-            .map((datum) => AllBookModel2(
-                data: [datum], error: true, message: databody['message']))
-            .toList();
-
-        filteringbook2.assignAll(result.data
-            .where((item) => item.totalpinjam >= 1)
-            .map((datum) => AllBookModel2(
-                error: true, data: [datum], message: databody['message'])));
         
-        notmember = databody['message'];
+        // var result = AllBookModel2.fromJson(databody);
+        // var fetchedTopics = result.data
+        //     .map((datum) => datum.topic.toString())
+        //     .expand((topics) => topics.split(', '))
+        //     .where((topic) => topic != "null") // Hanya topik yang bukan "null".
+        //     .toSet()
+        //     .toList();
+        // topics = fetchedTopics;
+        // selectedFilters = List.generate(topics.length, (index) => false);
+        // selectedYear = List.generate(years.length, (index) => false);
+
+        // listbook2.value = result.data
+        //     .map((datum) => AllBookModel2(
+        //         data: [datum], error: true, message: databody['message']))
+        //     .toList();
+
+        // filteringbook2.assignAll(result.data
+        //     .where((item) => item.totalpinjam >= 1)
+        //     .map((datum) => AllBookModel2(
+        //         error: true, data: [datum], message: databody['message'])));
+
+        notmember = databody['data'];
         isLoading.value = false;
       } else {
+       
         var databody = jsonDecode(response.body);
         var result = AllBookModel.fromJson(databody);
         var fetchedTopics = result.data
@@ -196,8 +204,9 @@ class LibraryController extends GetxController {
         topics = fetchedTopics;
         selectedFilters = List.generate(topics.length, (index) => false);
         selectedYear = List.generate(years.length, (index) => false);
-        var filtereddata =
-            result.data.where((item) => item.totalpinjam >= 1).toList();
+        var filtereddata = result.data
+            .where((item) => int.parse(item.totalpinjam) >= 1)
+            .toList();
         listbook.value = result.data
             .map((datum) => AllBookModel(data: [datum], error: false))
             .toList();
@@ -289,7 +298,8 @@ class LibraryController extends GetxController {
   addbookmark(String memberId, biblioId) async {
     final Map<String, dynamic> databody = {
       Library.memberId: memberId,
-      Library.biblioId: biblioId
+      Library.biblioId: biblioId,
+      Library.token: tokenapi,
     };
 
     var response = await http.post(
@@ -319,7 +329,8 @@ class LibraryController extends GetxController {
   delete(String memberId, biblioId) async {
     final Map<String, dynamic> databody = {
       Library.memberId: memberId,
-      Library.biblioId: biblioId
+      Library.biblioId: biblioId,
+      Library.token: tokenapi,
     };
     var response = await http.post(
         Uri.parse(
@@ -372,6 +383,67 @@ class LibraryController extends GetxController {
     }
   }
 
+  addqueue(String biblioId, String memberId, String itemCode) async {
+    final Map<String, dynamic> databody = {
+      Library.biblioId: biblioId,
+      Library.memberId: memberId,
+      Library.itemCode: itemCode,
+      Library.token: tokenapi,
+    };
+    loadingdata.value = true;
+    var response = await http.post(
+        Uri.parse("https://api-lib.strada.ac.id/public_api/loan/insertreserve"),
+        body: databody);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      if (data['error'] == true) {
+        loadingdata.value = false;
+        Get.snackbar("Go-Strada", data['data']);
+      } else {
+        loadingdata.value = false;
+        Get.back();
+        Get.snackbar("Go-Strada", "Anda Berhasil Booking buku ini");
+      }
+    } else {
+      Get.snackbar("Hi", "Terjadi Kesalahan");
+    }
+  }
+
+  register(String memberName, String birthDate, String nim, String gender,
+      String memberAddress, String phone, String email, String password) async {
+    final Map<String, dynamic> databody = {
+      Library.memberName: memberName,
+      Library.birthDate: birthDate,
+      Library.nim: nim,
+      Library.gender: gender,
+      Library.address: memberAddress,
+      Library.phone: phone,
+      Library.email: email,
+      Library.password: password,
+      Library.token: tokenapi,
+    };
+    loadingregister.value = true;
+    var response = await http.post(
+        Uri.parse("https://api-lib.strada.ac.id/public_api/register/insertreg"),
+        body: databody);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      if (data['error'] == true) {
+        loadingregister.value = false;
+        Get.snackbar("Go-Strada", data['data']);
+      } else {
+        loadingregister.value = false;
+        isRegister.value = true;
+        Get.snackbar("Anda Berhasil Register",
+            "Silahkan tunggu approval dari pustakawan");
+      }
+    } else {
+      Get.snackbar("Hi", "Terjadi Kesalahan");
+    }
+  }
+
   addloan2(
       String itemCode, String memberId, String loanDate, String dueDate) async {
     final Map<String, dynamic> databody = {
@@ -418,5 +490,13 @@ class LibraryController extends GetxController {
       Get.back();
       Get.snackbar('Sucsess', data['message']);
     } else {}
+  }
+
+  Future<void> openUrl(String url) async {
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url, mode: LaunchMode.externalApplication);
+    } else {
+      Get.snackbar("Go-Strada", "Tidak bisa membuka URL");
+    }
   }
 }

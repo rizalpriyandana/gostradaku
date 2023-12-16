@@ -53,4 +53,15 @@
             android:name="firebase_analytics_collection_enabled"
             android:value="false" />
     </application>
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="http" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+        <!-- Add more <intent> elements for other URL schemes -->
+    </queries>
 </manifest>

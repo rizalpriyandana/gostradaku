@@ -11,6 +11,8 @@ abstract class DataColors {
   static final Color black = HexColor('#000000');
   static final Color bluesky = HexColor('#DDE9FA');
   static final Color blues = HexColor('#A6B0C2');
+  static final Color greyhint = HexColor('#BCBBBB');
+  static final Color greyborderform = HexColor('#BDCDD6');
 
   static final Color skyBlue = HexColor('#9EB9E6');
   static final Color Blue = HexColor('#70B9EB');

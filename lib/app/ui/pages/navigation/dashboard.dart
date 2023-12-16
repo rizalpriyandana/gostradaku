@@ -174,19 +174,21 @@ class DashboardPage extends GetView<DashboardController> {
                           ),
                         ),
                         InkWell(
-                          onTap: () {} ,
-                          // showMaterialModalBottomSheet(
-                          //     context: context,
-                          //     // barrierColor: DataColors.primary,
-                          //     expand: false,
-                          //     bounce: true,
-                          //     builder: (context) => Lainnyav2Page(),
-                          //     enableDrag: true,
-                          //     shape: RoundedRectangleBorder(
-                          //         borderRadius: BorderRadius.only(
-                          //             topLeft: Radius.circular(10.sp),
-                          //             topRight: Radius.circular(10.sp)))
-                          //             ),
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              // barrierColor: DataColors.primary,
+                              // expand: false,
+                              // bounce: true,
+                              builder: (context) => Lainnyav2Page(),
+                              enableDrag: true,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10.sp),
+                                      topRight: Radius.circular(10.sp)))
+                                      );
+                          } ,
+                          
                           child: Container(
                             padding: EdgeInsets.only(left: 0.sp, top: 0.sp),
                             width: 25.w,

@@ -24,6 +24,7 @@ class _BookmarkState extends State<Bookmark> {
   LibraryController lc = Get.find<LibraryController>();
   final box = GetStorage();
   late Map data = box.read("dataUser") as Map<String, dynamic>;
+  String tokenapi = "MUp6bENqTzlzYVZaM0xKd2FkbnY5WkFzbEZQVFdSQTZ1QUdaY3grUnZvND0=";
 
   @override
   void initState() {
@@ -129,10 +130,11 @@ class _BookmarkState extends State<Bookmark> {
   bookmark(String memberId) async {
     final Map<String, dynamic> databody = {
       Library.memberId: memberId,
+      Library.token: tokenapi,
     };
 
     var response = await http.post(
-        Uri.parse("https://lib.strada.ac.id/index.php?p=api/biblio/bookmark"),
+        Uri.parse("https://api-lib.strada.ac.id/public_api/biblio/bookmark"),
         body: databody);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
@@ -154,7 +156,8 @@ class _BookmarkState extends State<Bookmark> {
   delete(String memberId, biblioId) async {
     final Map<String, dynamic> databody = {
       Library.memberId: memberId,
-      Library.biblioId: biblioId
+      Library.biblioId: biblioId,
+      Library.token: tokenapi,
     };
     var response = await http.post(
         Uri.parse(
@@ -162,11 +165,9 @@ class _BookmarkState extends State<Bookmark> {
         body: databody);
 
     if (response.statusCode == 200) {
-      final convertedBiblioId =
-          int.parse(databody[Library.biblioId].toString());
       Get.back();
       listbookmark
-          .removeWhere((data) => data.data[0].biblioId == convertedBiblioId);
+          .removeWhere((data) => data.data[0].biblioId == biblioId);
 
       Get.snackbar('Sucsess', 'Data berhasil dihapus');
     } else {
@@ -192,7 +193,7 @@ class ContentBookmark extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0.sp, 8.sp, 0.sp, 0.sp),
+      padding: EdgeInsets.only(top: 8.sp),
       child: Container(
         width: double.infinity,
         height: 90.sp,
@@ -218,8 +219,7 @@ class ContentBookmark extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          5.sp, 11.sp, 0.sp, 0.sp),
+                      padding: title.split(' ').length > 6 ? EdgeInsets.only(top: 12.sp,left: 5.sp):EdgeInsets.only(top: 8.sp, left: 5.sp),
                       child: Container(
                         width: 105.sp,
                         height: 20.sp,
@@ -281,10 +281,10 @@ class ContentBookmark extends StatelessWidget {
                 ),
                 Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(5.sp, 5.sp, 0.sp, 5.sp),
+                      EdgeInsets.only(left: 5.sp, top: 5.sp),
                   child: Container(
-                    width: 255.sp,
-                    height: 32.sp,
+                    height: title.split(' ').length > 6 ? 30.sp : 18.sp,
+                    width: 250.sp,
                     child: Text(
                       title,
                       style: TextStyle(
@@ -292,7 +292,7 @@ class ContentBookmark extends StatelessWidget {
                         fontSize: 11.sp,
                         fontWeight: FontWeight.bold,
                       ),
-                      maxLines: 2,
+                      maxLines: title.split(' ').length > 6 ? 2 : 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
